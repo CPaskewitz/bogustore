@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProductCard({ product }: { product: { id: number; name: string; price: string; imageUrl: string; } }) {
     return (
-        <div className="group rounded-lg border border-sage-green p-6 shadow-lg hover:shadow-2xl transition-shadow bg-white">
+        <Link href={`/product/${product.id}`} className="group block rounded-lg border border-sage-green p-6 shadow-lg hover:shadow-2xl transition-shadow bg-white">
             <Image
                 src={product.imageUrl}
                 alt={product.name}
@@ -14,9 +15,6 @@ export default function ProductCard({ product }: { product: { id: number; name: 
                 {product.name}
             </h2>
             <p className="text-sm text-brown-600">{product.price}</p>
-            <button className="mt-4 px-4 py-2 bg-muted-blue text-white rounded hover:bg-soft-coral">
-                Add to Cart
-            </button>
-        </div>
+        </Link>
     );
 }

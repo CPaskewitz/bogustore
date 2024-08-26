@@ -1,17 +1,17 @@
-"use client";
+import ProductImage from '../../components/ProductImage';
+import ProductDetails from '../../components/ProductDetails';
+import Button from '../../components/Button';
+import RelatedProducts from '../../components/RelatedProducts';
 
-import ProductImage from '../components/ProductImage';
-import ProductDetails from '../components/ProductDetails';
-import Button from '../components/Button';
-import RelatedProducts from '../components/RelatedProducts';
+export default function ProductPage({ params }: { params: { id: string } }) {
+    const { id } = params;
 
-export default function ProductPage() {
     const product = {
-        id: 1,
-        name: 'Product 1',
-        price: '$50.00',
+        id: id,
+        name: `Product ${id}`,
+        price: `$${50 + Number(id) * 10}.00`,
         description: 'This is a great product that will improve your life.',
-        imageUrl: '/product-1.jpg',
+        imageUrl: `/product-${id}.jpg`,
     };
 
     const handleAddToCart = () => {
