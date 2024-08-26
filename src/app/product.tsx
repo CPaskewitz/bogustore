@@ -1,3 +1,5 @@
+"use client";
+
 import ProductImage from '../components/ProductImage';
 import ProductDetails from '../components/ProductDetails';
 import Button from '../components/Button';
