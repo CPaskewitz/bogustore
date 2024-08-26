@@ -3,27 +3,130 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 82, 63, 50;
+  /* Deep Brown */
+  --background-start-rgb: 245, 240, 230;
+  /* Light Beige */
+  --background-end-rgb: 250, 245, 235;
+  /* Slightly Darker Beige */
+  --accent-blue-rgb: 162, 185, 188;
+  /* Muted Blue */
+  --accent-coral-rgb: 247, 127, 100;
+  /* Soft Coral */
+  --accent-green-rgb: 183, 195, 166;
+  /* Sage Green */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 30, 30, 30;
+    --background-end-rgb: 15, 15, 15;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  color: rgb(var(--accent-blue-rgb));
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(var(--accent-coral-rgb));
+}
+
+button {
+  background-color: rgb(var(--accent-blue-rgb));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: rgb(var(--accent-coral-rgb));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(var(--foreground-rgb));
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--foreground-rgb);
+}
+
+h2 {
+  font-size: 2rem;
+  color: var(--foreground-rgb);
+}
+
+p {
+  color: rgb(129, 97, 77);
+  /* Lighter Brown for body text */
+}
+
+.bg-beige-100 {
+  background-color: #f5f0e6;
+  /* Light Beige for main background */
+}
+
+.bg-beige-300 {
+  background-color: #ede4d5;
+  /* Medium Beige for sections like headers or footers */
+}
+
+.bg-muted-blue {
+  background-color: rgb(var(--accent-blue-rgb));
+  /* Muted Blue for buttons */
+}
+
+.bg-soft-coral {
+  background-color: rgb(var(--accent-coral-rgb));
+  /* Soft Coral for highlights */
+}
+
+.bg-sage-green {
+  background-color: rgb(var(--accent-green-rgb));
+  /* Sage Green for card borders or subtle backgrounds */
+}
+
+.text-brown-800 {
+  color: #523f32;
+  /* Deep Brown for headlines */
+}
+
+.text-brown-600 {
+  color: #81614d;
+  /* Lighter Brown for body text */
+}
+
+.text-soft-coral {
+  color: rgb(var(--accent-coral-rgb));
+  /* Coral for hover states and accents */
+}
+
+.text-muted-blue {
+  color: rgb(var(--accent-blue-rgb));
+  /* Muted Blue for links */
+}
+
+.border-sage-green {
+  border-color: rgb(var(--accent-green-rgb));
+  /* Sage Green for borders */
 }
 
 @layer utilities {
