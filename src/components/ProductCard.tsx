@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import SaleTag from './SaleTag'; 
 
 type Product = {
     id: number;
@@ -13,8 +14,11 @@ type Product = {
 };
 
 export default function ProductCard({ product }: { product: Product }) {
+    const salePrice = product.onSale ? product.price / 2 : product.price;
+
     return (
-        <Link href={`/product/${product.id}`} className="group block rounded-lg border border-sage-green p-6 shadow-lg hover:shadow-2xl transition-shadow bg-white">
+        <Link href={`/product/${product.id}`} className="group relative block rounded-lg border border-sage-green p-6 shadow-lg hover:shadow-2xl transition-shadow bg-white">
+            {product.onSale && <SaleTag />} 
             <Image
                 src={product.image}
                 alt={product.title}
@@ -25,7 +29,16 @@ export default function ProductCard({ product }: { product: Product }) {
             <h2 className="mt-4 text-2xl font-semibold text-brown-800 group-hover:text-soft-coral">
                 {product.title}
             </h2>
-            <p className="text-sm text-brown-600">${product.price.toFixed(2)}</p>
+            <p className="text-sm text-brown-600">
+                {product.onSale ? (
+                    <>
+                        <span className="line-through mr-2">${product.price.toFixed(2)}</span>
+                        <span className="text-soft-coral">${salePrice.toFixed(2)}</span>
+                    </>
+                ) : (
+                    <>${product.price.toFixed(2)}</>
+                )}
+            </p>
         </Link>
     );
 }
