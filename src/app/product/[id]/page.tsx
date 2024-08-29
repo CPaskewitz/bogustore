@@ -6,6 +6,7 @@ import ProductDetails from '../../../components/ProductDetails';
 import Button from '../../../components/Button';
 import RelatedProducts from '../../../components/RelatedProducts';
 import SaleTag from '../../../components/SaleTag';
+import useCart from '../../../hooks/useCart'; 
 
 type Product = {
     id: number;
@@ -20,6 +21,7 @@ type Product = {
 
 export default function ProductPage({ params }: { params: { id: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
+    const { addToCart } = useCart();
     const { id } = params;
 
     useEffect(() => {
@@ -31,6 +33,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
     const handleAddToCart = () => {
         if (product) {
+            addToCart(product);
             console.log(`${product.title} added to cart`);
         }
     };

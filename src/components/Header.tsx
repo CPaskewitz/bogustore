@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import CartIcon from '../components/CartIcon';
 
 export default function Header() {
   return (
@@ -14,18 +16,14 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link href="/shop" className="hover:text-brown-800 transition">
-              Shop
+            <Link href="/sale" className="hover:text-brown-800 transition">
+              Sale
             </Link>
           </li>
-          <li>
-            <Link href="/about" className="hover:text-brown-800 transition">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" className="hover:text-brown-800 transition">
-              Contact
+          <li className="flex items-center">
+            <CartIcon />
+            <Link href="/cart" className="hover:text-brown-800 transition">
+              Cart
             </Link>
           </li>
         </ul>
