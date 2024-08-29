@@ -1,8 +1,19 @@
 import { useEffect, useState } from 'react';
 import ProductCard from '../../components/ProductCard';
 
+type Product = {
+    id: number;
+    title: string;
+    image: string;
+    details: string;
+    price: number;
+    category: string;
+    onSale: boolean;
+    inventory: number;
+};
+
 export default function CategoryPage({ params }: { params: { id: string } }) {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const { id } = params;
 
     useEffect(() => {
