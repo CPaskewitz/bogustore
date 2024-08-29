@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import ProductImage from '../../../components/ProductImage';
 import ProductDetails from '../../../components/ProductDetails';
@@ -20,7 +22,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     const { id } = params;
 
     useEffect(() => {
-        fetch(`http://localhost:5000/products/${id}`)
+        fetch(`http://localhost:5001/products/${id}`)
             .then(response => response.json())
             .then(data => setProduct(data))
             .catch(error => console.error('Error fetching product:', error));
