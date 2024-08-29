@@ -16,7 +16,7 @@ export default function RelatedProducts({ category }: { category: string }) {
     const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/products?category=${category}`)
+        fetch(`http://localhost:5001/products?category=${category}`)
             .then(response => response.json())
             .then(data => setRelatedProducts(data))
             .catch(error => console.error('Error fetching related products:', error));
