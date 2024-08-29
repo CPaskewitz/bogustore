@@ -1,15 +1,24 @@
 import Image from 'next/image';
 
-export default function ProductImage({ imageUrl, alt }: { imageUrl: string; alt: string }) {
+export default function ProductImage({
+    imageUrl,
+    alt,
+    children,
+}: {
+    imageUrl: string;
+    alt: string;
+    children?: React.ReactNode;
+}) {
     return (
-        <div className="rounded-lg shadow-lg overflow-hidden">
+        <div className="relative">
             <Image
                 src={imageUrl}
                 alt={alt}
-                width={500}
-                height={500}
-                className="object-cover"
+                width={400}
+                height={400}
+                className="rounded-lg"
             />
+            {children}
         </div>
     );
 }

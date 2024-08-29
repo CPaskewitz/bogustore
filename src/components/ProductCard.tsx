@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import SaleTag from './SaleTag'; 
+import SaleTag from './SaleTag';
 
 type Product = {
     id: number;
@@ -18,14 +18,16 @@ export default function ProductCard({ product }: { product: Product }) {
 
     return (
         <Link href={`/product/${product.id}`} className="group relative block rounded-lg border border-sage-green p-6 shadow-lg hover:shadow-2xl transition-shadow bg-white">
-            {product.onSale && <SaleTag />} 
-            <Image
-                src={product.image}
-                alt={product.title}
-                width={400}
-                height={400}
-                className="rounded-lg"
-            />
+            <div className="relative">
+                <Image
+                    src={product.image}
+                    alt={product.title}
+                    width={400}
+                    height={400}
+                    className="rounded-lg"
+                />
+                {product.onSale && <SaleTag />}
+            </div>
             <h2 className="mt-4 text-2xl font-semibold text-brown-800 group-hover:text-soft-coral">
                 {product.title}
             </h2>
