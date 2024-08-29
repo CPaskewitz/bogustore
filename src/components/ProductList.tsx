@@ -1,8 +1,19 @@
 import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 
+type Product = {
+    id: number;
+    title: string;
+    image: string;
+    details: string;
+    price: number;
+    category: string;
+    onSale: boolean;
+    inventory: number;
+};
+
 export default function ProductList() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         fetch('http://localhost:5000/products')
