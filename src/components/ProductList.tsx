@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 
 export default function ProductList() {
-    const products = [
-        { id: 1, name: 'Product 1', price: '$50.00', imageUrl: '/product-1.jpg' },
-        { id: 2, name: 'Product 2', price: '$75.00', imageUrl: '/product-2.jpg' },
-    ];
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/products')
+            .then(response => response.json())
+            .then(data => setProducts(data))
+            .catch(error => console.error('Error fetching products:', error));
+    }, []);
 
     return (
         <section className="w-full grid gap-8 md:grid-cols-2 lg:grid-cols-3">
