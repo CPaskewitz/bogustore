@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 
-export default function RelatedProducts() {
-    const relatedProducts = [
-        { id: 2, name: 'Product 2', price: '$75.00', imageUrl: '/product-2.jpg' },
-        { id: 3, name: 'Product 3', price: '$100.00', imageUrl: '/product-3.jpg' },
-    ];
+export default function RelatedProducts({ category }: { category: string }) {
+    const [relatedProducts, setRelatedProducts] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/products?category=${category}`)
+            .then(response => response.json())
+            .then(data => setRelatedProducts(data))
+            .catch(error => console.error('Error fetching related products:', error));
+    }, [category]);
 
     return (
         <section className="mt-12">
