@@ -1,22 +1,28 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import ProductImage from '../../components/ProductImage';
 import ProductDetails from '../../components/ProductDetails';
 import Button from '../../components/Button';
 import RelatedProducts from '../../components/RelatedProducts';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
+    const [product, setProduct] = useState(null);
     const { id } = params;
 
-    const product = {
-        id: id,
-        name: `Product ${id}`,
-        price: `$${50 + Number(id) * 10}.00`,
-        description: 'This is a great product that will improve your life.',
-        imageUrl: `/product-${id}.jpg`,
-    };
+    useEffect(() => {
+        fetch(`http://localhost:5000/products/${id}`)
+            .then(response => response.json())
+            .then(data => setProduct(data))
+            .catch(error => console.error('Error fetching product:', error));
+    }, [id]);
 
     const handleAddToCart = () => {
         console.log(`${product.name} added to cart`);
     };
+
+    if (!product) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <main className="p-8 bg-beige-100 min-h-screen">
