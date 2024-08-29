@@ -10,7 +10,7 @@ export default function ProductImage({
     children?: React.ReactNode;
 }) {
     return (
-        <div className="relative">
+        <div className="relative p-4 bg-beige-300 border-2 border-sage-green rounded-lg">
             <Image
                 src={imageUrl}
                 alt={alt}
