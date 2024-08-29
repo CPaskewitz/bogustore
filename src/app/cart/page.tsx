@@ -4,7 +4,15 @@ import useCart from '../../hooks/useCart';
 import Image from 'next/image';
 
 export default function CartPage() {
-    const { cartItems } = useCart();
+    const { cartItems, removeFromCart, updateCartQuantity } = useCart();
+
+    const handleRemoveItem = (id: number) => {
+        removeFromCart(id);
+    };
+
+    const handleQuantityChange = (id: number, newQuantity: number) => {
+        updateCartQuantity(id, newQuantity);
+    };
 
     return (
         <main className="p-8 bg-beige-100 min-h-screen">
@@ -20,10 +28,22 @@ export default function CartPage() {
                                 height={100}
                                 className="rounded-lg"
                             />
-                            <div>
+                            <div className="flex-grow">
                                 <h2 className="text-xl font-bold">{item.title}</h2>
                                 <p className="text-brown-600">${item.price.toFixed(2)}</p>
+                                <div className="flex items-center space-x-2 mt-2">
+                                    <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
+                                        -
+                                    </button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
+                                        +
+                                    </button>
+                                </div>
                             </div>
+                            <button onClick={() => handleRemoveItem(item.id)} className="bg-red-500 text-white px-4 py-2 rounded">
+                                Remove
+                            </button>
                         </li>
                     ))}
                 </ul>

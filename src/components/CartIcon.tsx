@@ -1,8 +1,11 @@
+'use client';
+
 import Image from 'next/image';
-import useCart from '../hooks/useCart'; 
+import useCart from '../hooks/useCart';
+
 export default function CartIcon() {
-    const { cartItems } = useCart(); 
-    const itemCount = cartItems.length;
+    const { cartItems } = useCart();
+    const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     return (
         <div className="relative">
