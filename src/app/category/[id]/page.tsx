@@ -12,6 +12,7 @@ type Product = {
     category: string;
     onSale: boolean;
     inventory: number;
+    quantity: number;
 };
 
 export default function CategoryPage({ params }: { params: { id: string } }) {

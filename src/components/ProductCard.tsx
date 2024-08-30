@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <Link href={`/product/${product.id}`} className="group relative block rounded-lg border border-sage-green p-6 shadow-lg hover:shadow-2xl transition-shadow bg-white">
             <div className="relative">
                 <Image
-                    src={product.image}
+                    src={`/${product.image}`}
                     alt={product.title}
                     width={400}
                     height={400}

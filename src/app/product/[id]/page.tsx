@@ -51,7 +51,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     return (
         <main className="p-8 bg-beige-100 min-h-screen">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                <ProductImage imageUrl={product.image} alt={product.title}>
+                <ProductImage imageUrl={`/${product.image}`} alt={product.title}>
                     {product.onSale && <SaleTag />}
                 </ProductImage>
                 <div>

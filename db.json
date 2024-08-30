@@ -3,7 +3,7 @@
         {
             "id": 1,
             "title": "Sofa Set",
-            "image": "",
+            "image": "sofa.jpg",
             "details": "A comfortable and stylish sofa set perfect for any living room.",
             "price": 799.99,
             "category": "furniture",
