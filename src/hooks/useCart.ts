@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 type Product = {
     id: number;
@@ -7,7 +7,6 @@ type Product = {
     image: string;
     price: number;
     quantity: number;
-    inventory: number;
 };
 
 export default function useCart() {
@@ -18,33 +17,39 @@ export default function useCart() {
         setCartItems(savedCartItems);
     }, []);
 
-    const addToCart = (product: Product) => {
-        const existingItem = cartItems.find(item => item.id === product.id);
-        if (existingItem) {
-            if (existingItem.quantity < product.inventory) {
-                updateCartQuantity(product.id, existingItem.quantity + 1);
+    const addToCart = useCallback((product: Product) => {
+        setCartItems(prevItems => {
+            const existingItem = prevItems.find(item => item.id === product.id);
+            if (existingItem) {
+                return prevItems.map(item =>
+                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            } else {
+                const updatedCartItems = [...prevItems, { ...product, quantity: 1 }];
+                localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+                return updatedCartItems;
             }
-        } else {
-            const updatedCartItems = [...cartItems, { ...product, quantity: 1 }];
-            setCartItems(updatedCartItems);
+        });
+    }, []);
+
+    const updateCartQuantity = useCallback((id: number, quantity: number) => {
+        setCartItems(prevItems => {
+            const updatedCartItems = prevItems
+                .map(item => (item.id === id ? { ...item, quantity } : item))
+                .filter(item => item.quantity > 0);
+
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-        }
-    };
+            return updatedCartItems;
+        });
+    }, []);
 
-    const updateCartQuantity = (id: number, quantity: number) => {
-        const updatedCartItems = cartItems.map(item =>
-            item.id === id ? { ...item, quantity: Math.min(quantity, item.inventory) } : item
-        ).filter(item => item.quantity > 0);
-
-        setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    };
-
-    const removeFromCart = (id: number) => {
-        const updatedCartItems = cartItems.filter(item => item.id !== id);
-        setCartItems(updatedCartItems);
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    };
+    const removeFromCart = useCallback((id: number) => {
+        setCartItems(prevItems => {
+            const updatedCartItems = prevItems.filter(item => item.id !== id);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+            return updatedCartItems;
+        });
+    }, []);
 
     return { cartItems, addToCart, updateCartQuantity, removeFromCart };
 }

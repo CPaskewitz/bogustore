@@ -1,19 +1,20 @@
 'use client';
 
-import useCart from '../../hooks/useCart';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { updateCartQuantity, removeFromCart } from '../../store/cartSlice';
 import Image from 'next/image';
 
 export default function CartPage() {
-    const { cartItems, removeFromCart, updateCartQuantity } = useCart();
+    const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+    const dispatch = useDispatch();
 
     const handleRemoveItem = (id: number) => {
-        removeFromCart(id);
+        dispatch(removeFromCart(id));
     };
 
-    const handleQuantityChange = (id: number, newQuantity: number, inventory: number) => {
-        if (newQuantity <= inventory) {
-            updateCartQuantity(id, newQuantity);
-        }
+    const handleQuantityChange = (id: number, newQuantity: number) => {
+        dispatch(updateCartQuantity({ id, quantity: newQuantity }));
     };
 
     return (
@@ -34,12 +35,12 @@ export default function CartPage() {
                                 <h2 className="text-xl font-bold">{item.title}</h2>
                                 <p className="text-brown-600">${item.price.toFixed(2)}</p>
                                 <div className="flex items-center space-x-2 mt-2">
-                                    <button onClick={() => handleQuantityChange(item.id, item.quantity - 1, item.inventory)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
+                                    <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
                                         -
                                     </button>
                                     <span>{item.quantity}</span>
                                     {item.quantity < item.inventory && (
-                                        <button onClick={() => handleQuantityChange(item.id, item.quantity + 1, item.inventory)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
+                                        <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
                                             +
                                         </button>
                                     )}

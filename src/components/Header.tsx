@@ -5,11 +5,11 @@ import CartIcon from '../components/CartIcon';
 export default function Header() {
   return (
     <header className="p-6 bg-beige-200 shadow-md">
-      <nav className="max-w-6xl mx-auto flex justify-between">
-        <Link href="/" className="text-3xl font-bold text-brown-800">
+      <nav className="max-w-6xl mx-auto flex justify-center items-center">
+        <Link href="/" className="text-3xl font-bold text-brown-800 mr-auto">
           BoguStore
         </Link>
-        <ul className="flex gap-4 text-brown-700">
+        <ul className="flex gap-8 text-brown-700">
           <li>
             <Link href="/" className="hover:text-brown-800 transition">
               Home
@@ -21,10 +21,10 @@ export default function Header() {
             </Link>
           </li>
           <li className="flex items-center">
-            <CartIcon />
-            <Link href="/cart" className="hover:text-brown-800 transition">
+            <Link href="/cart" className="hover:text-brown-800 transition ml-2">
               Cart
             </Link>
+            <CartIcon />
           </li>
         </ul>
       </nav>

@@ -1,51 +1,42 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import useCart from '../hooks/useCart';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
+import { addToCart, updateCartQuantity, removeFromCart } from '../store/cartSlice';
 
 type Product = {
     id: number;
     title: string;
     image: string;
     price: number;
-    quantity?: number;
+    quantity: number;
     inventory: number;
 };
 
 export default function QuantityButton({ product }: { product: Product }) {
-    const { cartItems, addToCart, updateCartQuantity, removeFromCart } = useCart();
-    const cartItem = cartItems.find(item => item.id === product.id);
-    const [quantity, setQuantity] = useState(cartItem ? cartItem.quantity : 0);
-
-    useEffect(() => {
-        if (cartItem && cartItem.quantity !== quantity) {
-            setQuantity(cartItem.quantity);
-        }
-    }, [cartItem]);
+    const cartItem = useSelector((state: RootState) =>
+        state.cart.cartItems.find(item => item.id === product.id)
+    );
+    const dispatch = useDispatch();
+    const quantity = cartItem ? cartItem.quantity : 0;
 
     const handleAddToCart = () => {
         if (quantity === 0) {
-            addToCart({ ...product, quantity: 1 });
-            setQuantity(1);
+            dispatch(addToCart(product));
         }
     };
 
     const increaseQuantity = () => {
         if (quantity < product.inventory) {
-            const newQuantity = quantity + 1;
-            setQuantity(newQuantity);
-            updateCartQuantity(product.id, newQuantity);
+            dispatch(updateCartQuantity({ id: product.id, quantity: quantity + 1 }));
         }
     };
 
     const decreaseQuantity = () => {
         if (quantity > 1) {
-            const newQuantity = quantity - 1;
-            setQuantity(newQuantity);
-            updateCartQuantity(product.id, newQuantity);
+            dispatch(updateCartQuantity({ id: product.id, quantity: quantity - 1 }));
         } else {
-            setQuantity(0);
-            removeFromCart(product.id);
+            dispatch(removeFromCart(product.id));
         }
     };
 
