@@ -11,6 +11,7 @@ type Product = {
     category: string;
     onSale: boolean;
     inventory: number;
+    quantity: number;
 };
 
 export default function ProductCard({ product }: { product: Product }) {

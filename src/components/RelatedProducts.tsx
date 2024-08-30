@@ -10,6 +10,7 @@ type Product = {
     category: string;
     onSale: boolean;
     inventory: number;
+    quantity: number;
 };
 
 export default function RelatedProducts({ category }: { category: string }) {

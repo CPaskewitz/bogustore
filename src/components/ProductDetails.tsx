@@ -1,9 +1,13 @@
 type Product = {
+    id: number;
     title: string;
+    image: string;
     details: string;
     price: number;
-    inventory: number;
+    category: string;
     onSale: boolean;
+    inventory: number;
+    quantity: number;
 };
 
 export default function ProductDetails({ product }: { product: Product }) {

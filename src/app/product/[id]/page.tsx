@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductImage from '../../../components/ProductImage';
 import ProductDetails from '../../../components/ProductDetails';
 import QuantityButton from '../../../components/QuantityButton';
 import RelatedProducts from '../../../components/RelatedProducts';
 import SaleTag from '../../../components/SaleTag';
-import useCart from '../../../hooks/useCart';
+import { RootState } from '../../../store';
+import { updateCartQuantity } from '../../../store/cartSlice'; // Add this line
 
 type Product = {
     id: number;
@@ -22,7 +24,8 @@ type Product = {
 
 export default function ProductPage({ params }: { params: { id: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
-    const { cartItems } = useCart();
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const { id } = params;
 
     useEffect(() => {
@@ -33,7 +36,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 setProduct({ ...data, quantity: cartItem ? cartItem.quantity : 0 });
             })
             .catch((error) => console.error('Error fetching product:', error));
-    }, [id]);
+    }, [id, cartItems]);
+
+    const handleUpdateQuantity = (quantity: number) => {
+        if (product) {
+            dispatch(updateCartQuantity({ id: product.id, quantity }));
+        }
+    };
 
     if (!product) {
         return <div>Loading...</div>;
@@ -47,7 +56,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </ProductImage>
                 <div>
                     <ProductDetails product={product} />
-                    <QuantityButton product={product} />
+                    <QuantityButton product={product} handleUpdateQuantity={handleUpdateQuantity} />
                 </div>
             </div>
             <RelatedProducts category={product.category} />
