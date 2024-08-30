@@ -10,8 +10,10 @@ export default function CartPage() {
         removeFromCart(id);
     };
 
-    const handleQuantityChange = (id: number, newQuantity: number) => {
-        updateCartQuantity(id, newQuantity);
+    const handleQuantityChange = (id: number, newQuantity: number, inventory: number) => {
+        if (newQuantity <= inventory) {
+            updateCartQuantity(id, newQuantity);
+        }
     };
 
     return (
@@ -32,13 +34,15 @@ export default function CartPage() {
                                 <h2 className="text-xl font-bold">{item.title}</h2>
                                 <p className="text-brown-600">${item.price.toFixed(2)}</p>
                                 <div className="flex items-center space-x-2 mt-2">
-                                    <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
+                                    <button onClick={() => handleQuantityChange(item.id, item.quantity - 1, item.inventory)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
                                         -
                                     </button>
                                     <span>{item.quantity}</span>
-                                    <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
-                                        +
-                                    </button>
+                                    {item.quantity < item.inventory && (
+                                        <button onClick={() => handleQuantityChange(item.id, item.quantity + 1, item.inventory)} className="bg-gray-200 text-brown-800 px-2 py-1 rounded">
+                                            +
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                             <button onClick={() => handleRemoveItem(item.id)} className="bg-red-500 text-white px-4 py-2 rounded">

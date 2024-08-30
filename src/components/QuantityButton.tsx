@@ -9,6 +9,7 @@ type Product = {
     image: string;
     price: number;
     quantity?: number;
+    inventory: number;
 };
 
 export default function QuantityButton({ product }: { product: Product }) {
@@ -17,7 +18,7 @@ export default function QuantityButton({ product }: { product: Product }) {
     const [quantity, setQuantity] = useState(cartItem ? cartItem.quantity : 0);
 
     useEffect(() => {
-        if (cartItem) {
+        if (cartItem && cartItem.quantity !== quantity) {
             setQuantity(cartItem.quantity);
         }
     }, [cartItem]);
@@ -30,9 +31,11 @@ export default function QuantityButton({ product }: { product: Product }) {
     };
 
     const increaseQuantity = () => {
-        const newQuantity = quantity + 1;
-        setQuantity(newQuantity);
-        updateCartQuantity(product.id, newQuantity);
+        if (quantity < product.inventory) {
+            const newQuantity = quantity + 1;
+            setQuantity(newQuantity);
+            updateCartQuantity(product.id, newQuantity);
+        }
     };
 
     const decreaseQuantity = () => {
@@ -58,9 +61,11 @@ export default function QuantityButton({ product }: { product: Product }) {
                         -
                     </button>
                     <span className="text-brown-800">{quantity}</span>
-                    <button className="bg-gray-200 text-brown-800 px-2 py-1 rounded" onClick={increaseQuantity}>
-                        +
-                    </button>
+                    {quantity < product.inventory && (
+                        <button className="bg-gray-200 text-brown-800 px-2 py-1 rounded" onClick={increaseQuantity}>
+                            +
+                        </button>
+                    )}
                 </>
             )}
         </div>

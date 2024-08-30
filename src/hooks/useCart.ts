@@ -7,6 +7,7 @@ type Product = {
     image: string;
     price: number;
     quantity: number;
+    inventory: number;
 };
 
 export default function useCart() {
@@ -20,7 +21,9 @@ export default function useCart() {
     const addToCart = (product: Product) => {
         const existingItem = cartItems.find(item => item.id === product.id);
         if (existingItem) {
-            updateCartQuantity(product.id, existingItem.quantity + 1);
+            if (existingItem.quantity < product.inventory) {
+                updateCartQuantity(product.id, existingItem.quantity + 1);
+            }
         } else {
             const updatedCartItems = [...cartItems, { ...product, quantity: 1 }];
             setCartItems(updatedCartItems);
@@ -30,7 +33,7 @@ export default function useCart() {
 
     const updateCartQuantity = (id: number, quantity: number) => {
         const updatedCartItems = cartItems.map(item =>
-            item.id === id ? { ...item, quantity } : item
+            item.id === id ? { ...item, quantity: Math.min(quantity, item.inventory) } : item
         ).filter(item => item.quantity > 0);
 
         setCartItems(updatedCartItems);
