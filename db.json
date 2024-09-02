@@ -13,7 +13,7 @@
         {
             "id": 2,
             "title": "Dining Table",
-            "image": "",
+            "image": "diningTable.jpg",
             "details": "A large wooden dining table that seats six.",
             "price": 599.99,
             "category": "furniture",
@@ -23,7 +23,7 @@
         {
             "id": 3,
             "title": "Office Chair",
-            "image": "",
+            "image": "officeChair.jpg",
             "details": "Ergonomic office chair with lumbar support.",
             "price": 199.99,
             "category": "furniture",
@@ -33,7 +33,7 @@
         {
             "id": 4,
             "title": "Bookshelf",
-            "image": "",
+            "image": "bookshelf.jpg",
             "details": "A tall bookshelf with five adjustable shelves.",
             "price": 149.99,
             "category": "furniture",
@@ -43,7 +43,7 @@
         {
             "id": 5,
             "title": "Coffee Table",
-            "image": "",
+            "image": "coffeeTable.jpg",
             "details": "Modern glass coffee table for your living room.",
             "price": 299.99,
             "category": "furniture",
@@ -53,7 +53,7 @@
         {
             "id": 6,
             "title": "Armchair",
-            "image": "",
+            "image": "armchair.jpg",
             "details": "A plush armchair with soft upholstery.",
             "price": 349.99,
             "category": "furniture",
@@ -63,7 +63,7 @@
         {
             "id": 7,
             "title": "Wardrobe",
-            "image": "",
+            "image": "wardrobe.jpg",
             "details": "Spacious wooden wardrobe with mirror doors.",
             "price": 499.99,
             "category": "furniture",
@@ -73,7 +73,7 @@
         {
             "id": 8,
             "title": "Bed Frame",
-            "image": "",
+            "image": "bedframe.jpg",
             "details": "Sturdy bed frame with headboard included.",
             "price": 699.99,
             "category": "furniture",
@@ -83,7 +83,7 @@
         {
             "id": 9,
             "title": "Nightstand",
-            "image": "",
+            "image": "nightstand.jpg",
             "details": "Compact nightstand with drawers for storage.",
             "price": 129.99,
             "category": "furniture",
@@ -93,7 +93,7 @@
         {
             "id": 10,
             "title": "TV Stand",
-            "image": "",
+            "image": "tvStand.jpg",
             "details": "Modern TV stand with ample storage space.",
             "price": 249.99,
             "category": "furniture",
@@ -103,7 +103,7 @@
         {
             "id": 11,
             "title": "Wireless Headphones",
-            "image": "",
+            "image": "wirelessHeadphones.jpg",
             "details": "High-quality wireless headphones with noise cancellation.",
             "price": 199.99,
             "category": "electronics",
@@ -113,7 +113,7 @@
         {
             "id": 12,
             "title": "Smartphone",
-            "image": "",
+            "image": "smartphone.jpg",
             "details": "Latest model smartphone with OLED display.",
             "price": 999.99,
             "category": "electronics",
@@ -123,7 +123,7 @@
         {
             "id": 13,
             "title": "Smart TV",
-            "image": "",
+            "image": "smartTV.jpg",
             "details": "4K Ultra HD Smart TV with built-in streaming apps.",
             "price": 1299.99,
             "category": "electronics",
@@ -133,7 +133,7 @@
         {
             "id": 14,
             "title": "Laptop",
-            "image": "",
+            "image": "laptop.jpg",
             "details": "Lightweight laptop with 16GB RAM and 512GB SSD.",
             "price": 1499.99,
             "category": "electronics",
@@ -143,7 +143,7 @@
         {
             "id": 15,
             "title": "Bluetooth Speaker",
-            "image": "",
+            "image": "bluetoothSpeaker.jpg",
             "details": "Portable Bluetooth speaker with long battery life.",
             "price": 129.99,
             "category": "electronics",
@@ -153,7 +153,7 @@
         {
             "id": 16,
             "title": "Smartwatch",
-            "image": "",
+            "image": "smartwatch.jpg",
             "details": "Fitness tracking smartwatch with heart rate monitor.",
             "price": 299.99,
             "category": "electronics",
@@ -163,7 +163,7 @@
         {
             "id": 17,
             "title": "Gaming Console",
-            "image": "",
+            "image": "gamingConsole.jpg",
             "details": "Next-gen gaming console with 1TB storage.",
             "price": 499.99,
             "category": "electronics",
@@ -173,7 +173,7 @@
         {
             "id": 18,
             "title": "Tablet",
-            "image": "",
+            "image": "tablet.jpg",
             "details": "10-inch tablet with retina display and stylus support.",
             "price": 699.99,
             "category": "electronics",
@@ -183,7 +183,7 @@
         {
             "id": 19,
             "title": "Digital Camera",
-            "image": "",
+            "image": "digitalCamera.jpg",
             "details": "Compact digital camera with 4K video recording.",
             "price": 799.99,
             "category": "electronics",
@@ -193,7 +193,7 @@
         {
             "id": 20,
             "title": "Noise-Cancelling Earbuds",
-            "image": "",
+            "image": "earbuds.jpg",
             "details": "Wireless earbuds with active noise cancellation.",
             "price": 149.99,
             "category": "electronics",
@@ -203,7 +203,7 @@
         {
             "id": 21,
             "title": "T-shirt",
-            "image": "",
+            "image": "tshirt.jpg",
             "details": "A soft and comfortable cotton T-shirt available in various colors.",
             "price": 19.99,
             "category": "apparel",
@@ -213,7 +213,7 @@
         {
             "id": 22,
             "title": "Jeans",
-            "image": "",
+            "image": "jeans.jpg",
             "details": "Slim fit jeans made from durable denim.",
             "price": 49.99,
             "category": "apparel",
@@ -223,7 +223,7 @@
         {
             "id": 23,
             "title": "Hoodie",
-            "image": "",
+            "image": "hoodie.jpg",
             "details": "Cozy fleece hoodie available in multiple sizes.",
             "price": 39.99,
             "category": "apparel",
@@ -233,7 +233,7 @@
         {
             "id": 24,
             "title": "Jacket",
-            "image": "",
+            "image": "jacket.jpg",
             "details": "Waterproof jacket with a comfortable fit.",
             "price": 99.99,
             "category": "apparel",
@@ -243,7 +243,7 @@
         {
             "id": 25,
             "title": "Sneakers",
-            "image": "",
+            "image": "sneakers.jpg",
             "details": "Lightweight and breathable sneakers for everyday wear.",
             "price": 59.99,
             "category": "apparel",
@@ -253,7 +253,7 @@
         {
             "id": 26,
             "title": "Dress",
-            "image": "",
+            "image": "dress.jpg",
             "details": "Elegant evening dress available in multiple colors.",
             "price": 79.99,
             "category": "apparel",
@@ -263,7 +263,7 @@
         {
             "id": 27,
             "title": "Socks (5-pack)",
-            "image": "",
+            "image": "socks.jpg",
             "details": "Soft and durable cotton socks in a variety of colors.",
             "price": 12.99,
             "category": "apparel",
@@ -273,7 +273,7 @@
         {
             "id": 28,
             "title": "Cap",
-            "image": "",
+            "image": "cap.jpg",
             "details": "Adjustable baseball cap with a modern design.",
             "price": 15.99,
             "category": "apparel",
@@ -283,7 +283,7 @@
         {
             "id": 29,
             "title": "Belt",
-            "image": "",
+            "image": "belt.jpg",
             "details": "Leather belt with a silver buckle.",
             "price": 24.99,
             "category": "apparel",
@@ -293,7 +293,7 @@
         {
             "id": 30,
             "title": "Gloves",
-            "image": "",
+            "image": "gloves.jpg",
             "details": "Warm woolen gloves perfect for cold weather.",
             "price": 19.99,
             "category": "apparel",
