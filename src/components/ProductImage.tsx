@@ -10,13 +10,13 @@ export default function ProductImage({
     children?: React.ReactNode;
 }) {
     return (
-        <div className="relative bg-beige-300 border-2 border-sage-green rounded-lg overflow-hidden inline-block">
+        <div className="relative bg-beige-300 border-2 border-sage-green rounded-lg overflow-hidden inline-block" style={{ width: '400px', height: '400px' }}>
             <Image
                 src={imageUrl}
                 alt={alt}
                 width={400}
                 height={400}
-                className="block w-full h-auto rounded-lg"
+                className="w-full h-full object-cover"
             />
             {children}
         </div>
