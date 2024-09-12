@@ -4,9 +4,12 @@ type Product = {
     id: number;
     title: string;
     image: string;
+    details: string;
     price: number;
-    quantity: number;
+    category: string;
+    onSale: boolean;
     inventory: number;
+    quantity: number;
 };
 
 type CartState = {
