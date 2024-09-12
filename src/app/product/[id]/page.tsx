@@ -8,7 +8,7 @@ import QuantityButton from '../../../components/QuantityButton';
 import RelatedProducts from '../../../components/RelatedProducts';
 import SaleTag from '../../../components/SaleTag';
 import { RootState } from '../../../store';
-import { updateCartQuantity } from '../../../store/cartSlice'; // Add this line
+import { updateCartQuantity } from '../../../store/cartSlice';
 
 type Product = {
     id: number;
@@ -59,7 +59,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                     <QuantityButton product={product} handleUpdateQuantity={handleUpdateQuantity} />
                 </div>
             </div>
-            <RelatedProducts category={product.category} />
+            <RelatedProducts category={product.category} currentProductId={product.id} />
         </main>
     );
 }

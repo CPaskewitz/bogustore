@@ -13,15 +13,18 @@ type Product = {
     quantity: number;
 };
 
-export default function RelatedProducts({ category }: { category: string }) {
+export default function RelatedProducts({ category, currentProductId }: { category: string, currentProductId: number }) {
     const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         fetch(`http://localhost:5001/products?category=${category}`)
             .then(response => response.json())
-            .then(data => setRelatedProducts(data))
+            .then(data => {
+                const filteredProducts = data.filter((product: Product) => product.id !== currentProductId);
+                setRelatedProducts(filteredProducts);
+            })
             .catch(error => console.error('Error fetching related products:', error));
-    }, [category]);
+    }, [category, currentProductId]);
 
     return (
         <section className="mt-12">
