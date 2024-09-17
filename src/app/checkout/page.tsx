@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
+import { clearCart } from '../../store/cartSlice';
 import Link from 'next/link';
 
 const ShippingSchema = Yup.object().shape({
@@ -24,6 +25,7 @@ export default function CheckoutPage() {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false); // Track payment status
+    const dispatch = useDispatch();
 
     const shippingFormik = useFormik({
         initialValues: {
@@ -49,6 +51,7 @@ export default function CheckoutPage() {
             setTimeout(() => {
                 setLoading(false);
                 setPaymentSuccess(true);
+                dispatch(clearCart());
             }, 2000);
         },
     });
