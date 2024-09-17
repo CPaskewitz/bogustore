@@ -1,12 +1,40 @@
 'use client';
 
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../../store/cartSlice';
 import Link from 'next/link';
 
+type Product = {
+    id: number;
+    title: string;
+    price: number;
+    onSale: boolean;
+    quantity: number;
+};
+
 export default function SuccessPage() {
-    const cartItems = useSelector((state: RootState) => state.cart.cartItems);
-    const shippingInfo = JSON.parse(localStorage.getItem('shippingInfo') || '{}');
+    const [cartItems, setCartItems] = useState<Product[]>([]);
+    const [shippingInfo, setShippingInfo] = useState<{ fullName: string; address: string; email: string }>({
+        fullName: '',
+        address: '',
+        email: '',
+    });
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const storedCartItems = localStorage.getItem('cartItems');
+        const storedShippingInfo = localStorage.getItem('shippingInfo');
+        if (storedCartItems) {
+            setCartItems(JSON.parse(storedCartItems));
+        }
+        if (storedShippingInfo) {
+            setShippingInfo(JSON.parse(storedShippingInfo));
+        }
+        dispatch(clearCart());
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('shippingInfo');
+    }, [dispatch]);
 
     const calculateTotalPrice = () => {
         return cartItems.reduce(

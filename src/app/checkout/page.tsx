@@ -1,12 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { clearCart } from '../../store/cartSlice';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const ShippingSchema = Yup.object().shape({
     fullName: Yup.string().required('Full name is required'),
@@ -24,8 +23,7 @@ export default function CheckoutPage() {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [paymentSuccess, setPaymentSuccess] = useState(false);
-    const dispatch = useDispatch();
+    const router = useRouter();
 
     const shippingFormik = useFormik({
         initialValues: {
@@ -46,22 +44,20 @@ export default function CheckoutPage() {
             cvv: '',
         },
         validationSchema: PaymentSchema,
-        onSubmit: (values) => {
+        onSubmit: () => {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                setPaymentSuccess(true);
-                dispatch(clearCart());
+                router.push('/checkout/success');
             }, 2000);
         },
     });
 
-    const calculateTotalPrice = () => {
-        return cartItems.reduce(
-            (total, item) => total + (item.onSale ? item.price / 2 : item.price) * item.quantity,
-            0
-        );
-    };
+    useEffect(() => {
+        if (step === 2) {
+            localStorage.setItem('shippingInfo', JSON.stringify(shippingFormik.values));
+        }
+    }, [step]);
 
     return (
         <main className="p-8 bg-beige-100 min-h-screen">
@@ -171,6 +167,7 @@ export default function CheckoutPage() {
                             )}
                         </div>
                     </div>
+
                     {loading && (
                         <div className="bg-yellow-100 p-4 rounded-lg mb-4">
                             <p className="text-yellow-600">Processing payment, please wait...</p>
@@ -193,12 +190,6 @@ export default function CheckoutPage() {
                             Submit Payment
                         </button>
                     </div>
-
-                    {paymentSuccess && (
-                        <Link href="/checkout/success" className="w-full bg-blue-500 text-white py-3 rounded-lg text-center block mt-4">
-                            Go to Success Page
-                        </Link>
-                    )}
                 </form>
             )}
         </main>
