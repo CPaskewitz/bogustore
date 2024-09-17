@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
+import { setShippingInfo } from '../../store/cartSlice';
 import { useRouter } from 'next/navigation';
 
 const ShippingSchema = Yup.object().shape({
@@ -23,6 +24,7 @@ export default function CheckoutPage() {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const shippingFormik = useFormik({
@@ -32,7 +34,8 @@ export default function CheckoutPage() {
             email: '',
         },
         validationSchema: ShippingSchema,
-        onSubmit: () => {
+        onSubmit: (values) => {
+            dispatch(setShippingInfo(values));
             setStep(2);
         },
     });
@@ -52,12 +55,6 @@ export default function CheckoutPage() {
             }, 2000);
         },
     });
-
-    useEffect(() => {
-        if (step === 2) {
-            localStorage.setItem('shippingInfo', JSON.stringify(shippingFormik.values));
-        }
-    }, [step]);
 
     return (
         <main className="p-8 bg-beige-100 min-h-screen">

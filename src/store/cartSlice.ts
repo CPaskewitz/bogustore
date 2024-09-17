@@ -1,17 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const saveCartToLocalStorage = (cartItems: Product[]) => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-};
-
-const loadCartFromLocalStorage = (): Product[] => {
-    if (typeof window !== 'undefined') {
-        const storedCart = localStorage.getItem('cart');
-        return storedCart ? JSON.parse(storedCart) : [];
-    }
-    return [];
-};
-
 type Product = {
     id: number;
     title: string;
@@ -24,13 +12,20 @@ type Product = {
     quantity: number;
 };
 
-type CartState = {
-    cartItems: Product[];
+type ShippingInfo = {
+    fullName: string;
+    address: string;
+    email: string;
 };
 
-// Initialize state from local storage
+type CartState = {
+    cartItems: Product[];
+    shippingInfo: ShippingInfo | null;
+};
+
 const initialState: CartState = {
-    cartItems: loadCartFromLocalStorage(),
+    cartItems: [],
+    shippingInfo: null,
 };
 
 const cartSlice = createSlice({
@@ -46,7 +41,6 @@ const cartSlice = createSlice({
             } else {
                 state.cartItems.push({ ...action.payload, quantity: 1 });
             }
-            saveCartToLocalStorage(state.cartItems);  // Save to local storage
         },
         updateCartQuantity: (state, action: PayloadAction<{ id: number; quantity: number }>) => {
             const item = state.cartItems.find(item => item.id === action.payload.id);
@@ -57,19 +51,20 @@ const cartSlice = createSlice({
                     item.quantity = action.payload.quantity;
                 }
             }
-            saveCartToLocalStorage(state.cartItems);
         },
         removeFromCart: (state, action: PayloadAction<number>) => {
             state.cartItems = state.cartItems.filter(item => item.id !== action.payload);
-            saveCartToLocalStorage(state.cartItems);
         },
         clearCart: (state) => {
             state.cartItems = [];
-            localStorage.removeItem('cart');  
+            state.shippingInfo = null; 
+        },
+        setShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
+            state.shippingInfo = action.payload;
         },
     },
 });
 
-export const { addToCart, updateCartQuantity, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, updateCartQuantity, removeFromCart, clearCart, setShippingInfo } = cartSlice.actions;
 
 export default cartSlice.reducer;
