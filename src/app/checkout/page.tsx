@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import Link from 'next/link';
 
 const ShippingSchema = Yup.object().shape({
     fullName: Yup.string().required('Full name is required'),
@@ -21,6 +22,8 @@ const PaymentSchema = Yup.object().shape({
 export default function CheckoutPage() {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const [step, setStep] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false); // Track payment status
 
     const shippingFormik = useFormik({
         initialValues: {
@@ -30,7 +33,7 @@ export default function CheckoutPage() {
         },
         validationSchema: ShippingSchema,
         onSubmit: () => {
-            setStep(2); 
+            setStep(2);
         },
     });
 
@@ -42,7 +45,11 @@ export default function CheckoutPage() {
         },
         validationSchema: PaymentSchema,
         onSubmit: (values) => {
-            alert('Payment successful! All items have been discounted to $0.');
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                setPaymentSuccess(true);
+            }, 2000);
         },
     });
 
@@ -65,6 +72,7 @@ export default function CheckoutPage() {
                         <input
                             type="text"
                             name="fullName"
+                            placeholder="John Doe"
                             onChange={shippingFormik.handleChange}
                             onBlur={shippingFormik.handleBlur}
                             value={shippingFormik.values.fullName}
@@ -79,6 +87,7 @@ export default function CheckoutPage() {
                         <input
                             type="text"
                             name="address"
+                            placeholder="1234 Main St, Apartment 101"
                             onChange={shippingFormik.handleChange}
                             onBlur={shippingFormik.handleBlur}
                             value={shippingFormik.values.address}
@@ -93,6 +102,7 @@ export default function CheckoutPage() {
                         <input
                             type="email"
                             name="email"
+                            placeholder="johndoe@example.com"
                             onChange={shippingFormik.handleChange}
                             onBlur={shippingFormik.handleBlur}
                             value={shippingFormik.values.email}
@@ -116,6 +126,7 @@ export default function CheckoutPage() {
                         <input
                             type="text"
                             name="cardNumber"
+                            placeholder="4242 4242 4242 4242"
                             onChange={paymentFormik.handleChange}
                             onBlur={paymentFormik.handleBlur}
                             value={paymentFormik.values.cardNumber}
@@ -131,6 +142,7 @@ export default function CheckoutPage() {
                             <input
                                 type="text"
                                 name="expiryDate"
+                                placeholder="12/24"
                                 onChange={paymentFormik.handleChange}
                                 onBlur={paymentFormik.handleBlur}
                                 value={paymentFormik.values.expiryDate}
@@ -145,6 +157,7 @@ export default function CheckoutPage() {
                             <input
                                 type="text"
                                 name="cvv"
+                                placeholder="123"
                                 onChange={paymentFormik.handleChange}
                                 onBlur={paymentFormik.handleBlur}
                                 value={paymentFormik.values.cvv}
@@ -155,8 +168,12 @@ export default function CheckoutPage() {
                             )}
                         </div>
                     </div>
+                    {loading && (
+                        <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+                            <p className="text-yellow-600">Processing payment, please wait...</p>
+                        </div>
+                    )}
 
-                    {/* Mock Stripe Implementation */}
                     <div className="bg-green-100 p-4 rounded-lg mb-4">
                         <p className="text-green-600">Discount Applied: $0 due on checkout!</p>
                     </div>
@@ -169,10 +186,16 @@ export default function CheckoutPage() {
                         >
                             Back to Shipping
                         </button>
-                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-lg">
+                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-lg" disabled={loading}>
                             Submit Payment
                         </button>
                     </div>
+
+                    {paymentSuccess && (
+                        <Link href="/checkout/success" className="w-full bg-blue-500 text-white py-3 rounded-lg text-center block mt-4">
+                            Go to Success Page
+                        </Link>
+                    )}
                 </form>
             )}
         </main>
