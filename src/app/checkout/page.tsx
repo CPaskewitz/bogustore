@@ -24,7 +24,7 @@ export default function CheckoutPage() {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [paymentSuccess, setPaymentSuccess] = useState(false); // Track payment status
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
     const dispatch = useDispatch();
 
     const shippingFormik = useFormik({
