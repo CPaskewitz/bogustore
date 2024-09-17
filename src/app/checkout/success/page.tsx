@@ -30,13 +30,6 @@ export default function SuccessPage() {
         }
     }, [cartItemsFromStore, shippingInfoFromStore, dispatch]);
 
-    const calculateTotalPrice = () => {
-        return cartItems.reduce(
-            (total, item) => total + (item.onSale ? item.price / 2 : item.price) * item.quantity,
-            0
-        );
-    };
-
     if (!shippingInfo || cartItems.length === 0) {
         return (
             <main className="p-8 bg-beige-100 min-h-screen">
@@ -53,11 +46,13 @@ export default function SuccessPage() {
                 <ul className="mb-4 text-brown-600">
                     {cartItems.map((item) => (
                         <li key={item.id} className="mb-2">
-                            {item.title} (x{item.quantity}) - ${item.onSale ? (item.price / 2).toFixed(2) : item.price.toFixed(2)}
+                            {item.title} (x{item.quantity}) -{' '}
+                            <span className="line-through">${(item.price * item.quantity).toFixed(2)}</span> {' '}
+                            <span className="text-green-600">$0.00</span>
                         </li>
                     ))}
                 </ul>
-                <p className="font-bold mb-4">Total: ${calculateTotalPrice().toFixed(2)}</p>
+                <p className="font-bold mb-4">Total: <span className="line-through">${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span> {' '} <span className="text-green-600">$0.00</span></p>
 
                 <h2 className="text-xl text-brown-800 font-semibold mb-4">Shipping To</h2>
                 <p className="mb-2"><strong>Name:</strong> {shippingInfo.fullName}</p>
