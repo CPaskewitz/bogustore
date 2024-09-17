@@ -19,7 +19,7 @@ export default function SaleProductsPage() {
     const [saleProducts, setSaleProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch('http://localhost:5001/products?onSale=true')
+        fetch('/api/products?onSale=true')
             .then((response) => response.json())
             .then((data) => setSaleProducts(data))
             .catch((error) => console.error('Error fetching sale products:', error));

@@ -17,7 +17,7 @@ export default function RelatedProducts({ category, currentProductId }: { catego
     const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5001/products?category=${category}`)
+        fetch(`/api/products?category=${category}`)
             .then(response => response.json())
             .then(data => {
                 const filteredProducts = data.filter((product: Product) => product.id !== currentProductId);

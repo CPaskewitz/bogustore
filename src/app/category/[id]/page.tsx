@@ -20,7 +20,7 @@ export default function CategoryPage({ params }: { params: { id: string } }) {
     const { id } = params;
 
     useEffect(() => {
-        fetch(`http://localhost:5001/products?category=${id}`)
+        fetch(`/api/products?category=${id}`)
             .then(response => response.json())
             .then(data => setProducts(data))
             .catch(error => console.error('Error fetching category products:', error));

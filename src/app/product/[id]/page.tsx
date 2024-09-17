@@ -29,7 +29,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     const { id } = params;
 
     useEffect(() => {
-        fetch(`http://localhost:5001/products/${id}`)
+        fetch(`/api/products/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 const cartItem = cartItems.find(item => item.id === data.id);

@@ -31,7 +31,7 @@ export default function QuantityButton({ product, handleUpdateQuantity }: Quanti
     const handleAddToCartClick = () => {
         if (quantity === 0) {
             dispatch(addToCart(product));
-            handleUpdateQuantity(1); // Update quantity to 1
+            handleUpdateQuantity(1);
         }
     };
 
