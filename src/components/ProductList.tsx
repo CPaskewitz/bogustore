@@ -26,9 +26,11 @@ export default function ProductList() {
     }, []);
 
     return (
-        <section className="w-full grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <section className="w-full overflow-x-scroll whitespace-nowrap py-4">
             {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <div key={product.id} className="inline-block px-2">
+                    <ProductCard product={product} />
+                </div>
             ))}
         </section>
     );

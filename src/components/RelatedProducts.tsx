@@ -29,9 +29,11 @@ export default function RelatedProducts({ category, currentProductId }: { catego
     return (
         <section className="mt-12">
             <h2 className="text-3xl font-bold text-brown-800 mb-6">Related Products</h2>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="w-full overflow-x-scroll whitespace-nowrap py-4">
                 {relatedProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <div key={product.id} className="inline-block px-2">
+                        <ProductCard product={product} />
+                    </div>
                 ))}
             </div>
         </section>
