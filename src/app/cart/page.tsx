@@ -6,38 +6,20 @@ import { updateCartQuantity, removeFromCart } from '../../store/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type Product = {
-    id: number;
-    title: string;
-    image: string;
-    details: string;
-    price: number;
-    category: string;
-    onSale: number;
-    inventory: number;
-    quantity: number;
-    sizes: string[];
-    colors: string[];
-};
-
 export default function CartPage() {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const dispatch = useDispatch();
 
-    const handleRemoveItem = (id: number) => {
-        dispatch(removeFromCart(id));
+    const handleRemoveItem = (id: number, size?: string, color?: string) => {
+        dispatch(removeFromCart({ id, size, color }));
     };
 
-    const handleQuantityChange = (id: number, newQuantity: number) => {
-        dispatch(updateCartQuantity({ id, quantity: newQuantity }));
-    };
-
-    const calculatePrice = (item: Product) => {
-        return item.onSale > 0 ? item.price * (1 - item.onSale / 100) : item.price;
+    const handleQuantityChange = (id: number, newQuantity: number, size?: string, color?: string) => {
+        dispatch(updateCartQuantity({ id, quantity: newQuantity, size, color }));
     };
 
     const calculateTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + calculatePrice(item) * item.quantity, 0);
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
     return (
@@ -61,33 +43,27 @@ export default function CartPage() {
                                     <Link href={`/product/${item.id}`} className="text-xl font-bold text-brown-800 hover:text-soft-coral transition-colors">
                                         {item.title}
                                     </Link>
-                                    <p className="text-brown-600">
-                                        ${calculatePrice(item).toFixed(2)}
-                                        {item.onSale > 0 && (
-                                            <span className="text-sm text-soft-coral ml-2">({item.onSale}% OFF)</span>
-                                        )}
-                                    </p>
+                                    {item.size && <p>Size: {item.size}</p>}
+                                    {item.color && <p>Color: {item.color}</p>}
                                     <div className="flex items-center space-x-2 mt-2">
                                         <button
-                                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                            onClick={() => handleQuantityChange(item.id, item.quantity - 1, item.size, item.color)}
                                             className="bg-gray-200 text-brown-800 px-2 py-1 rounded"
                                             disabled={item.quantity <= 1}
                                         >
                                             -
                                         </button>
                                         <span className="px-2 text-brown-800 font-semibold">{item.quantity}</span>
-                                        {item.quantity < item.inventory && (
-                                            <button
-                                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                                className="bg-gray-200 text-brown-800 px-2 py-1 rounded"
-                                            >
-                                                +
-                                            </button>
-                                        )}
+                                        <button
+                                            onClick={() => handleQuantityChange(item.id, item.quantity + 1, item.size, item.color)}
+                                            className="bg-gray-200 text-brown-800 px-2 py-1 rounded"
+                                        >
+                                            +
+                                        </button>
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => handleRemoveItem(item.id)}
+                                    onClick={() => handleRemoveItem(item.id, item.size, item.color)}
                                     className="bg-red-500 text-white px-4 py-2 rounded"
                                 >
                                     Remove

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import SizeDropdown from '../components/SizeDropDown';
 import ColorSelector from '../components/ColorSelector';
 
@@ -16,6 +17,9 @@ type Product = {
 };
 
 export default function ProductDetails({ product }: { product: Product }) {
+    const [selectedSize, setSelectedSize] = useState(product.sizes[0] || null);
+    const [selectedColor, setSelectedColor] = useState(product.colors[0] || null);
+
     const salePrice = product.onSale > 0 ? product.price * ((100 - product.onSale) / 100) : product.price;
 
     return (
@@ -35,8 +39,12 @@ export default function ProductDetails({ product }: { product: Product }) {
             <p className="text-lg text-brown-600">In stock: {product.inventory}</p>
             {product.onSale > 0 && <p className="text-lg text-green-600">{product.onSale}% OFF!</p>}
 
-            {product.sizes.length > 0 && <SizeDropdown sizes={product.sizes} />}
-            {product.colors.length > 0 && <ColorSelector colors={product.colors} />}
+            {product.sizes.length > 0 && (
+                <SizeDropdown sizes={product.sizes} selectedSize={selectedSize} onSizeChange={setSelectedSize} />
+            )}
+            {product.colors.length > 0 && (
+                <ColorSelector colors={product.colors} selectedColor={selectedColor} onColorChange={setSelectedColor} />
+            )}
         </div>
     );
 }

@@ -14,6 +14,11 @@ type Product = {
     colors: string[];
 };
 
+type CartItem = Product & {
+    size?: string;
+    color?: string;
+};
+
 type ShippingInfo = {
     fullName: string;
     address: string;
@@ -21,7 +26,7 @@ type ShippingInfo = {
 };
 
 type CartState = {
-    cartItems: Product[];
+    cartItems: CartItem[];
     shippingInfo: ShippingInfo | null;
 };
 
@@ -34,32 +39,40 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart: (state, action: PayloadAction<Product>) => {
-            const existingItem = state.cartItems.find(item => item.id === action.payload.id);
+        addToCart: (state, action: PayloadAction<{ product: Product; size?: string; color?: string }>) => {
+            const { product, size, color } = action.payload;
+            const existingItem = state.cartItems.find(
+                item => item.id === product.id && item.size === size && item.color === color
+            );
+
             if (existingItem) {
                 if (existingItem.quantity < existingItem.inventory) {
                     existingItem.quantity += 1;
                 }
             } else {
-                state.cartItems.push({ ...action.payload, quantity: 1 });
+                state.cartItems.push({ ...product, quantity: 1, size, color });
             }
         },
-        updateCartQuantity: (state, action: PayloadAction<{ id: number; quantity: number }>) => {
-            const item = state.cartItems.find(item => item.id === action.payload.id);
+        updateCartQuantity: (state, action: PayloadAction<{ id: number; quantity: number; size?: string; color?: string }>) => {
+            const { id, quantity, size, color } = action.payload;
+            const item = state.cartItems.find(item => item.id === id && item.size === size && item.color === color);
             if (item) {
-                if (action.payload.quantity === 0) {
-                    state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
-                } else if (action.payload.quantity <= item.inventory) {
-                    item.quantity = action.payload.quantity;
+                if (quantity === 0) {
+                    state.cartItems = state.cartItems.filter(
+                        item => !(item.id === id && item.size === size && item.color === color)
+                    );
+                } else if (quantity <= item.inventory) {
+                    item.quantity = quantity;
                 }
             }
         },
-        removeFromCart: (state, action: PayloadAction<number>) => {
-            state.cartItems = state.cartItems.filter(item => item.id !== action.payload);
+        removeFromCart: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
+            const { id, size, color } = action.payload;
+            state.cartItems = state.cartItems.filter(item => !(item.id === id && item.size === size && item.color === color));
         },
         clearCart: (state) => {
             state.cartItems = [];
-            state.shippingInfo = null; 
+            state.shippingInfo = null;
         },
         setShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
             state.shippingInfo = action.payload;
