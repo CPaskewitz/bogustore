@@ -5,9 +5,9 @@ type ColorSelectorProps = {
 };
 
 export default function ColorSelector({ colors }: ColorSelectorProps) {
-    const [selectedColor, setSelectedColor] = useState(colors[0]);
+    if (colors.length === 0) return null;
 
-    if (colors[0] === 'none') return null;
+    const [selectedColor, setSelectedColor] = useState(colors[0]);
 
     return (
         <div className="mb-4">

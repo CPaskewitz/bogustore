@@ -5,9 +5,9 @@ type SizeDropdownProps = {
 };
 
 export default function SizeDropdown({ sizes }: SizeDropdownProps) {
-    const [selectedSize, setSelectedSize] = useState(sizes[0]);
+    if (sizes.length === 0) return null;
 
-    if (sizes[0] === 'none') return null;
+    const [selectedSize, setSelectedSize] = useState(sizes[0]);
 
     return (
         <div className="mb-4">
