@@ -11,7 +11,7 @@ type Product = {
     details: string;
     price: number;
     category: string;
-    onSale: boolean;
+    onSale: number;
     inventory: number;
     quantity: number;
 };
@@ -23,11 +23,12 @@ export default function SaleProductsPage() {
     const productsPerPage = 9;
 
     useEffect(() => {
-        fetch('/api/products?onSale=true')
+        fetch('/api/products')
             .then((response) => response.json())
             .then((data) => {
-                setSaleProducts(data);
-                setTotalPages(Math.ceil(data.length / productsPerPage));
+                const filteredProducts = data.filter((product: Product) => product.onSale > 0);
+                setSaleProducts(filteredProducts);
+                setTotalPages(Math.ceil(filteredProducts.length / productsPerPage));
             })
             .catch((error) => console.error('Error fetching sale products:', error));
     }, []);
