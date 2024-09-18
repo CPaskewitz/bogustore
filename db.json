@@ -7,8 +7,14 @@
             "details": "A comfortable and stylish sofa set perfect for any living room.",
             "price": 799.99,
             "category": "furniture",
-            "onSale": true,
-            "inventory": 5
+            "onSale": 20,
+            "inventory": 5,
+            "sizes": [],
+            "colors": [
+                "brown",
+                "black",
+                "grey"
+            ]
         },
         {
             "id": 2,
@@ -17,8 +23,10 @@
             "details": "A large wooden dining table that seats six.",
             "price": 599.99,
             "category": "furniture",
-            "onSale": false,
-            "inventory": 10
+            "onSale": 0,
+            "inventory": 10,
+            "sizes": [],
+            "colors": []
         },
         {
             "id": 3,
@@ -27,8 +35,13 @@
             "details": "Ergonomic office chair with lumbar support.",
             "price": 199.99,
             "category": "furniture",
-            "onSale": true,
-            "inventory": 15
+            "onSale": 15,
+            "inventory": 15,
+            "sizes": [],
+            "colors": [
+                "black",
+                "grey"
+            ]
         },
         {
             "id": 4,
@@ -37,8 +50,13 @@
             "details": "A tall bookshelf with five adjustable shelves.",
             "price": 149.99,
             "category": "furniture",
-            "onSale": false,
-            "inventory": 8
+            "onSale": 0,
+            "inventory": 8,
+            "sizes": [],
+            "colors": [
+                "brown",
+                "white"
+            ]
         },
         {
             "id": 5,
@@ -47,8 +65,14 @@
             "details": "Modern glass coffee table for your living room.",
             "price": 299.99,
             "category": "furniture",
-            "onSale": false,
-            "inventory": 12
+            "onSale": 0,
+            "inventory": 12,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white",
+                "brown"
+            ]
         },
         {
             "id": 6,
@@ -57,8 +81,13 @@
             "details": "A plush armchair with soft upholstery.",
             "price": 349.99,
             "category": "furniture",
-            "onSale": true,
-            "inventory": 6
+            "onSale": 25,
+            "inventory": 6,
+            "sizes": [],
+            "colors": [
+                "blue",
+                "green"
+            ]
         },
         {
             "id": 7,
@@ -67,8 +96,13 @@
             "details": "Spacious wooden wardrobe with mirror doors.",
             "price": 499.99,
             "category": "furniture",
-            "onSale": false,
-            "inventory": 4
+            "onSale": 0,
+            "inventory": 4,
+            "sizes": [],
+            "colors": [
+                "brown",
+                "white"
+            ]
         },
         {
             "id": 8,
@@ -77,8 +111,16 @@
             "details": "Sturdy bed frame with headboard included.",
             "price": 699.99,
             "category": "furniture",
-            "onSale": false,
-            "inventory": 10
+            "onSale": 0,
+            "inventory": 10,
+            "sizes": [
+                "Queen",
+                "King"
+            ],
+            "colors": [
+                "brown",
+                "black"
+            ]
         },
         {
             "id": 9,
@@ -87,8 +129,13 @@
             "details": "Compact nightstand with drawers for storage.",
             "price": 129.99,
             "category": "furniture",
-            "onSale": true,
-            "inventory": 20
+            "onSale": 10,
+            "inventory": 20,
+            "sizes": [],
+            "colors": [
+                "white",
+                "brown"
+            ]
         },
         {
             "id": 10,
@@ -97,8 +144,13 @@
             "details": "Modern TV stand with ample storage space.",
             "price": 249.99,
             "category": "furniture",
-            "onSale": false,
-            "inventory": 7
+            "onSale": 0,
+            "inventory": 7,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white"
+            ]
         },
         {
             "id": 11,
@@ -107,8 +159,13 @@
             "details": "High-quality wireless headphones with noise cancellation.",
             "price": 199.99,
             "category": "electronics",
-            "onSale": false,
-            "inventory": 20
+            "onSale": 0,
+            "inventory": 20,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white"
+            ]
         },
         {
             "id": 12,
@@ -117,8 +174,13 @@
             "details": "Latest model smartphone with OLED display.",
             "price": 999.99,
             "category": "electronics",
-            "onSale": false,
-            "inventory": 30
+            "onSale": 0,
+            "inventory": 30,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white"
+            ]
         },
         {
             "id": 13,
@@ -127,8 +189,10 @@
             "details": "4K Ultra HD Smart TV with built-in streaming apps.",
             "price": 1299.99,
             "category": "electronics",
-            "onSale": true,
-            "inventory": 10
+            "onSale": 20,
+            "inventory": 10,
+            "sizes": [],
+            "colors": []
         },
         {
             "id": 14,
@@ -137,8 +201,13 @@
             "details": "Lightweight laptop with 16GB RAM and 512GB SSD.",
             "price": 1499.99,
             "category": "electronics",
-            "onSale": false,
-            "inventory": 15
+            "onSale": 0,
+            "inventory": 15,
+            "sizes": [],
+            "colors": [
+                "silver",
+                "black"
+            ]
         },
         {
             "id": 15,
@@ -147,8 +216,14 @@
             "details": "Portable Bluetooth speaker with long battery life.",
             "price": 129.99,
             "category": "electronics",
-            "onSale": true,
-            "inventory": 25
+            "onSale": 15,
+            "inventory": 25,
+            "sizes": [],
+            "colors": [
+                "blue",
+                "black",
+                "red"
+            ]
         },
         {
             "id": 16,
@@ -157,8 +232,13 @@
             "details": "Fitness tracking smartwatch with heart rate monitor.",
             "price": 299.99,
             "category": "electronics",
-            "onSale": false,
-            "inventory": 18
+            "onSale": 0,
+            "inventory": 18,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white"
+            ]
         },
         {
             "id": 17,
@@ -167,8 +247,13 @@
             "details": "Next-gen gaming console with 1TB storage.",
             "price": 499.99,
             "category": "electronics",
-            "onSale": true,
-            "inventory": 5
+            "onSale": 30,
+            "inventory": 5,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white"
+            ]
         },
         {
             "id": 18,
@@ -177,8 +262,13 @@
             "details": "10-inch tablet with retina display and stylus support.",
             "price": 699.99,
             "category": "electronics",
-            "onSale": false,
-            "inventory": 12
+            "onSale": 0,
+            "inventory": 12,
+            "sizes": [],
+            "colors": [
+                "black",
+                "white"
+            ]
         },
         {
             "id": 19,
@@ -187,8 +277,13 @@
             "details": "Compact digital camera with 4K video recording.",
             "price": 799.99,
             "category": "electronics",
-            "onSale": false,
-            "inventory": 7
+            "onSale": 0,
+            "inventory": 7,
+            "sizes": [],
+            "colors": [
+                "black",
+                "silver"
+            ]
         },
         {
             "id": 20,
@@ -197,8 +292,13 @@
             "details": "Wireless earbuds with active noise cancellation.",
             "price": 149.99,
             "category": "electronics",
-            "onSale": true,
-            "inventory": 30
+            "onSale": 25,
+            "inventory": 30,
+            "sizes": [],
+            "colors": [
+                "white",
+                "black"
+            ]
         },
         {
             "id": 21,
@@ -207,8 +307,20 @@
             "details": "A soft and comfortable cotton T-shirt available in various colors.",
             "price": 19.99,
             "category": "apparel",
-            "onSale": false,
-            "inventory": 50
+            "onSale": 15,
+            "inventory": 50,
+            "sizes": [
+                "Small",
+                "Medium",
+                "Large",
+                "X-Large"
+            ],
+            "colors": [
+                "red",
+                "blue",
+                "black",
+                "white"
+            ]
         },
         {
             "id": 22,
@@ -217,8 +329,17 @@
             "details": "Slim fit jeans made from durable denim.",
             "price": 49.99,
             "category": "apparel",
-            "onSale": true,
-            "inventory": 40
+            "onSale": 10,
+            "inventory": 40,
+            "sizes": [
+                "Small",
+                "Medium",
+                "Large"
+            ],
+            "colors": [
+                "blue",
+                "black"
+            ]
         },
         {
             "id": 23,
@@ -227,8 +348,18 @@
             "details": "Cozy fleece hoodie available in multiple sizes.",
             "price": 39.99,
             "category": "apparel",
-            "onSale": false,
-            "inventory": 35
+            "onSale": 0,
+            "inventory": 35,
+            "sizes": [
+                "Small",
+                "Medium",
+                "Large"
+            ],
+            "colors": [
+                "grey",
+                "black",
+                "blue"
+            ]
         },
         {
             "id": 24,
@@ -237,8 +368,19 @@
             "details": "Waterproof jacket with a comfortable fit.",
             "price": 99.99,
             "category": "apparel",
-            "onSale": false,
-            "inventory": 20
+            "onSale": 0,
+            "inventory": 20,
+            "sizes": [
+                "Small",
+                "Medium",
+                "Large",
+                "X-Large"
+            ],
+            "colors": [
+                "black",
+                "blue",
+                "green"
+            ]
         },
         {
             "id": 25,
@@ -247,8 +389,19 @@
             "details": "Lightweight and breathable sneakers for everyday wear.",
             "price": 59.99,
             "category": "apparel",
-            "onSale": true,
-            "inventory": 25
+            "onSale": 25,
+            "inventory": 25,
+            "sizes": [
+                "8",
+                "9",
+                "10",
+                "11"
+            ],
+            "colors": [
+                "white",
+                "black",
+                "blue"
+            ]
         },
         {
             "id": 26,
@@ -257,8 +410,18 @@
             "details": "Elegant evening dress available in multiple colors.",
             "price": 79.99,
             "category": "apparel",
-            "onSale": false,
-            "inventory": 15
+            "onSale": 0,
+            "inventory": 15,
+            "sizes": [
+                "Small",
+                "Medium",
+                "Large"
+            ],
+            "colors": [
+                "red",
+                "black",
+                "blue"
+            ]
         },
         {
             "id": 27,
@@ -267,8 +430,14 @@
             "details": "Soft and durable cotton socks in a variety of colors.",
             "price": 12.99,
             "category": "apparel",
-            "onSale": true,
-            "inventory": 60
+            "onSale": 15,
+            "inventory": 60,
+            "sizes": [],
+            "colors": [
+                "white",
+                "black",
+                "grey"
+            ]
         },
         {
             "id": 28,
@@ -277,8 +446,14 @@
             "details": "Adjustable baseball cap with a modern design.",
             "price": 15.99,
             "category": "apparel",
-            "onSale": false,
-            "inventory": 30
+            "onSale": 0,
+            "inventory": 30,
+            "sizes": [],
+            "colors": [
+                "black",
+                "blue",
+                "red"
+            ]
         },
         {
             "id": 29,
@@ -287,8 +462,13 @@
             "details": "Leather belt with a silver buckle.",
             "price": 24.99,
             "category": "apparel",
-            "onSale": true,
-            "inventory": 20
+            "onSale": 20,
+            "inventory": 20,
+            "sizes": [],
+            "colors": [
+                "black",
+                "brown"
+            ]
         },
         {
             "id": 30,
@@ -297,8 +477,17 @@
             "details": "Warm woolen gloves perfect for cold weather.",
             "price": 19.99,
             "category": "apparel",
-            "onSale": false,
-            "inventory": 25
+            "onSale": 0,
+            "inventory": 25,
+            "sizes": [
+                "Small",
+                "Medium",
+                "Large"
+            ],
+            "colors": [
+                "black",
+                "grey"
+            ]
         }
     ]
 }
