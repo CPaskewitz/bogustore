@@ -10,7 +10,7 @@ type Product = {
     id: number;
     title: string;
     price: number;
-    onSale: boolean;
+    onSale: number;
     quantity: number;
 };
 
@@ -30,6 +30,10 @@ export default function SuccessPage() {
         }
     }, [cartItemsFromStore, shippingInfoFromStore, dispatch]);
 
+    const calculateDiscountedPrice = (price: number, discount: number) => {
+        return discount ? price - (price * discount) / 100 : price;
+    };
+
     if (!shippingInfo || cartItems.length === 0) {
         return (
             <main className="p-8 bg-beige-100 min-h-screen">
@@ -47,17 +51,43 @@ export default function SuccessPage() {
                     {cartItems.map((item) => (
                         <li key={item.id} className="mb-2">
                             {item.title} (x{item.quantity}) -{' '}
-                            <span className="line-through">${(item.price * item.quantity).toFixed(2)}</span> {' '}
-                            <span className="text-green-600">$0.00</span>
+                            {item.onSale > 0 ? (
+                                <>
+                                    <span className="line-through">${(item.price * item.quantity).toFixed(2)}</span>{' '}
+                                    <span className="text-green-600">${calculateDiscountedPrice(item.price, item.onSale).toFixed(2)}</span>
+                                </>
+                            ) : (
+                                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                            )}
                         </li>
                     ))}
                 </ul>
-                <p className="font-bold mb-4">Total: <span className="line-through">${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span> {' '} <span className="text-green-600">$0.00</span></p>
+                <p className="font-bold mb-4">
+                    Total:{' '}
+                    <span className="line-through">
+                        ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+                    </span>{' '}
+                    <span className="text-green-600">
+                        ${cartItems
+                            .reduce(
+                                (total, item) =>
+                                    total + calculateDiscountedPrice(item.price, item.onSale) * item.quantity,
+                                0
+                            )
+                            .toFixed(2)}
+                    </span>
+                </p>
 
                 <h2 className="text-xl text-brown-800 font-semibold mb-4">Shipping To</h2>
-                <p className="mb-2"><strong>Name:</strong> {shippingInfo.fullName}</p>
-                <p className="mb-2"><strong>Address:</strong> {shippingInfo.address}</p>
-                <p className="mb-4"><strong>Email:</strong> {shippingInfo.email}</p>
+                <p className="mb-2">
+                    <strong>Name:</strong> {shippingInfo.fullName}
+                </p>
+                <p className="mb-2">
+                    <strong>Address:</strong> {shippingInfo.address}
+                </p>
+                <p className="mb-4">
+                    <strong>Email:</strong> {shippingInfo.email}
+                </p>
 
                 <p className="text-green-600 mb-4">An email confirmation has been sent to {shippingInfo.email}.</p>
 
