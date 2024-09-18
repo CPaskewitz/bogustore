@@ -171,10 +171,6 @@ export default function CheckoutPage() {
                         </div>
                     )}
 
-                    <div className="bg-green-100 p-4 rounded-lg mb-4">
-                        <p className="text-green-600">Discount Applied: $0 due on checkout!</p>
-                    </div>
-
                     <div className="flex justify-between items-center">
                         <button
                             type="button"

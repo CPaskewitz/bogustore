@@ -17,8 +17,8 @@ type Product = {
 };
 
 export default function ProductDetails({ product }: { product: Product }) {
-    const [selectedSize, setSelectedSize] = useState(product.sizes[0] || null);
-    const [selectedColor, setSelectedColor] = useState(product.colors[0] || null);
+    const [selectedSize, setSelectedSize] = useState<string | undefined>(product.sizes[0] || undefined);
+    const [selectedColor, setSelectedColor] = useState<string | undefined>(product.colors[0] || undefined);
 
     const salePrice = product.onSale > 0 ? product.price * ((100 - product.onSale) / 100) : product.price;
 

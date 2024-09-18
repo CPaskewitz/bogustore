@@ -1,6 +1,6 @@
 type ColorSelectorProps = {
     colors: string[];
-    selectedColor: string | null;
+    selectedColor: string | null | undefined;
     onColorChange: (color: string) => void;
 };
 

@@ -41,8 +41,12 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action: PayloadAction<{ product: Product; size?: string; color?: string }>) => {
             const { product, size, color } = action.payload;
+
             const existingItem = state.cartItems.find(
-                item => item.id === product.id && item.size === size && item.color === color
+                item =>
+                    item.id === product.id &&
+                    (item.size ?? null) === (size ?? null) && 
+                    (item.color ?? null) === (color ?? null)
             );
 
             if (existingItem) {
@@ -53,27 +57,43 @@ const cartSlice = createSlice({
                 state.cartItems.push({ ...product, quantity: 1, size, color });
             }
         },
+
         updateCartQuantity: (state, action: PayloadAction<{ id: number; quantity: number; size?: string; color?: string }>) => {
             const { id, quantity, size, color } = action.payload;
-            const item = state.cartItems.find(item => item.id === id && item.size === size && item.color === color);
+
+            const item = state.cartItems.find(
+                item =>
+                    item.id === id &&
+                    (item.size ?? null) === (size ?? null) &&
+                    (item.color ?? null) === (color ?? null)
+            );
+
             if (item) {
                 if (quantity === 0) {
                     state.cartItems = state.cartItems.filter(
-                        item => !(item.id === id && item.size === size && item.color === color)
+                        item =>
+                            !(item.id === id && (item.size ?? null) === (size ?? null) && (item.color ?? null) === (color ?? null))
                     );
                 } else if (quantity <= item.inventory) {
                     item.quantity = quantity;
                 }
             }
         },
+
         removeFromCart: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
             const { id, size, color } = action.payload;
-            state.cartItems = state.cartItems.filter(item => !(item.id === id && item.size === size && item.color === color));
+
+            state.cartItems = state.cartItems.filter(
+                item =>
+                    !(item.id === id && (item.size ?? null) === (size ?? null) && (item.color ?? null) === (color ?? null))
+            );
         },
+
         clearCart: (state) => {
             state.cartItems = [];
             state.shippingInfo = null;
         },
+
         setShippingInfo: (state, action: PayloadAction<ShippingInfo>) => {
             state.shippingInfo = action.payload;
         },

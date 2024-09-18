@@ -1,6 +1,6 @@
 type SizeDropdownProps = {
     sizes: string[];
-    selectedSize: string | null;
+    selectedSize: string | null | undefined;
     onSizeChange: (size: string) => void;
 };
 
