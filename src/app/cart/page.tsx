@@ -13,9 +13,13 @@ type Product = {
     details: string;
     price: number;
     category: string;
-    onSale: boolean;
+    onSale: number;
     inventory: number;
     quantity: number;
+    size?: string;
+    color?: string;
+    sizes: string[];
+    colors: string[];
 };
 
 export default function CartPage() {
@@ -31,7 +35,7 @@ export default function CartPage() {
     };
 
     const calculatePrice = (item: Product) => {
-        return item.onSale ? item.price / 2 : item.price;
+        return item.onSale > 0 ? item.price * (1 - item.onSale / 100) : item.price;
     };
 
     const calculateTotalPrice = () => {
@@ -61,10 +65,16 @@ export default function CartPage() {
                                     </Link>
                                     <p className="text-brown-600">
                                         ${calculatePrice(item).toFixed(2)}
-                                        {item.onSale && (
-                                            <span className="text-sm text-soft-coral ml-2">(50% OFF)</span>
+                                        {item.onSale > 0 && (
+                                            <span className="text-sm text-soft-coral ml-2">({item.onSale}% OFF)</span>
                                         )}
                                     </p>
+                                    {item.size && (
+                                        <p className="text-brown-600 text-sm">Size: {item.size}</p>
+                                    )}
+                                    {item.color && (
+                                        <p className="text-brown-600 text-sm">Color: {item.color}</p>
+                                    )}
                                     <div className="flex items-center space-x-2 mt-2">
                                         <button
                                             onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
