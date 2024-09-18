@@ -10,9 +10,11 @@ type Product = {
     details: string;
     price: number;
     category: string;
-    onSale: boolean;
+    onSale: number;
     inventory: number;
     quantity: number;
+    sizes: string[];
+    colors: string[];
 };
 
 export default function ProductList() {
@@ -31,7 +33,7 @@ export default function ProductList() {
                     if (!acc[category]) acc[category] = [];
                     acc[category].push(product);
 
-                    if (product.onSale) {
+                    if (product.onSale > 0) {
                         if (!acc['On Sale']) acc['On Sale'] = [];
                         acc['On Sale'].push(product);
                     }
