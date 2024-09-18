@@ -7,9 +7,11 @@ type Product = {
     details: string;
     price: number;
     category: string;
-    onSale: boolean;
+    onSale: number;
     inventory: number;
     quantity: number;
+    sizes: string[];
+    colors: string[];
 };
 
 type ShippingInfo = {

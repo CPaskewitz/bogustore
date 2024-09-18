@@ -9,9 +9,15 @@ import Link from 'next/link';
 type Product = {
     id: number;
     title: string;
+    image: string;
+    details: string;
     price: number;
+    category: string;
     onSale: number;
+    inventory: number;
     quantity: number;
+    sizes: string[];
+    colors: string[];
 };
 
 export default function SuccessPage() {

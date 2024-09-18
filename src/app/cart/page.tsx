@@ -16,8 +16,6 @@ type Product = {
     onSale: number;
     inventory: number;
     quantity: number;
-    size?: string;
-    color?: string;
     sizes: string[];
     colors: string[];
 };
@@ -69,12 +67,6 @@ export default function CartPage() {
                                             <span className="text-sm text-soft-coral ml-2">({item.onSale}% OFF)</span>
                                         )}
                                     </p>
-                                    {item.size && (
-                                        <p className="text-brown-600 text-sm">Size: {item.size}</p>
-                                    )}
-                                    {item.color && (
-                                        <p className="text-brown-600 text-sm">Color: {item.color}</p>
-                                    )}
                                     <div className="flex items-center space-x-2 mt-2">
                                         <button
                                             onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
