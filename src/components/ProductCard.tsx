@@ -14,6 +14,8 @@ type Product = {
     quantity: number;
     sizes: string[];
     colors: string[];
+    size?: string;
+    color?: string;
 };
 
 export default function ProductCard({ product }: { product: Product }) {

@@ -22,6 +22,8 @@ type Product = {
     quantity: number;
     sizes: string[];
     colors: string[];
+    size?: string;
+    color?: string;
 };
 
 export default function ProductPage({ params }: { params: { id: string } }) {

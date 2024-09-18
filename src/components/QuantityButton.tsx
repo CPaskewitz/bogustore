@@ -16,22 +16,22 @@ type Product = {
     quantity: number;
     sizes: string[];
     colors: string[];
+    size?: string;
+    color?: string;
 };
 
 type QuantityButtonProps = {
     product: Product;
-    selectedSize?: string | null;
-    selectedColor?: string | null;
     handleUpdateQuantity: (quantity: number) => void;
 };
 
-export default function QuantityButton({ product, selectedSize, selectedColor, handleUpdateQuantity }: QuantityButtonProps) {
+export default function QuantityButton({ product, handleUpdateQuantity }: QuantityButtonProps) {
     const cartItem = useSelector((state: RootState) =>
         state.cart.cartItems.find(
             item =>
                 item.id === product.id &&
-                (selectedSize ? item.size === selectedSize : true) &&
-                (selectedColor ? item.color === selectedColor : true)
+                item.size === product.size &&
+                item.color === product.color
         )
     );
     const dispatch = useDispatch();
@@ -39,11 +39,7 @@ export default function QuantityButton({ product, selectedSize, selectedColor, h
 
     const handleAddToCartClick = () => {
         if (quantity === 0) {
-            dispatch(addToCart({
-                product,
-                size: selectedSize ?? undefined,
-                color: selectedColor ?? undefined,
-            }));
+            dispatch(addToCart({ product }));
             handleUpdateQuantity(1);
         }
     };
@@ -54,8 +50,8 @@ export default function QuantityButton({ product, selectedSize, selectedColor, h
             dispatch(updateCartQuantity({
                 id: product.id,
                 quantity: newQuantity,
-                size: selectedSize ?? undefined,
-                color: selectedColor ?? undefined,
+                size: product.size,
+                color: product.color,
             }));
             handleUpdateQuantity(newQuantity);
         }
@@ -67,15 +63,15 @@ export default function QuantityButton({ product, selectedSize, selectedColor, h
             dispatch(updateCartQuantity({
                 id: product.id,
                 quantity: newQuantity,
-                size: selectedSize ?? undefined,
-                color: selectedColor ?? undefined,
+                size: product.size,
+                color: product.color,
             }));
             handleUpdateQuantity(newQuantity);
         } else {
             dispatch(removeFromCart({
                 id: product.id,
-                size: selectedSize ?? undefined,
-                color: selectedColor ?? undefined,
+                size: product.size,
+                color: product.color,
             }));
             handleUpdateQuantity(0);
         }

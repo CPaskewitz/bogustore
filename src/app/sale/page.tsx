@@ -16,6 +16,8 @@ type Product = {
     quantity: number;
     sizes: string[];
     colors: string[];
+    size?: string;
+    color?: string;
 };
 
 export default function SaleProductsPage() {

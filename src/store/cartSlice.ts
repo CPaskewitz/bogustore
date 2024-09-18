@@ -12,10 +12,7 @@ type Product = {
     quantity: number;
     sizes: string[];
     colors: string[];
-};
-
-type CartItem = Product & {
-    size?: string;
+    size?: string; 
     color?: string;
 };
 
@@ -26,7 +23,7 @@ type ShippingInfo = {
 };
 
 type CartState = {
-    cartItems: CartItem[];
+    cartItems: Product[];
     shippingInfo: ShippingInfo | null;
 };
 
@@ -39,14 +36,14 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart: (state, action: PayloadAction<{ product: Product; size?: string; color?: string }>) => {
-            const { product, size, color } = action.payload;
+        addToCart: (state, action: PayloadAction<{ product: Product }>) => {
+            const { product } = action.payload;
 
             const existingItem = state.cartItems.find(
                 item =>
                     item.id === product.id &&
-                    (item.size ?? null) === (size ?? null) && 
-                    (item.color ?? null) === (color ?? null)
+                    item.size === product.size &&
+                    item.color === product.color
             );
 
             if (existingItem) {
@@ -54,7 +51,7 @@ const cartSlice = createSlice({
                     existingItem.quantity += 1;
                 }
             } else {
-                state.cartItems.push({ ...product, quantity: 1, size, color });
+                state.cartItems.push({ ...product, quantity: 1 });
             }
         },
 
@@ -64,15 +61,14 @@ const cartSlice = createSlice({
             const item = state.cartItems.find(
                 item =>
                     item.id === id &&
-                    (item.size ?? null) === (size ?? null) &&
-                    (item.color ?? null) === (color ?? null)
+                    item.size === size &&
+                    item.color === color
             );
 
             if (item) {
                 if (quantity === 0) {
                     state.cartItems = state.cartItems.filter(
-                        item =>
-                            !(item.id === id && (item.size ?? null) === (size ?? null) && (item.color ?? null) === (color ?? null))
+                        item => !(item.id === id && item.size === size && item.color === color)
                     );
                 } else if (quantity <= item.inventory) {
                     item.quantity = quantity;
@@ -85,7 +81,7 @@ const cartSlice = createSlice({
 
             state.cartItems = state.cartItems.filter(
                 item =>
-                    !(item.id === id && (item.size ?? null) === (size ?? null) && (item.color ?? null) === (color ?? null))
+                    !(item.id === id && item.size === size && item.color === color)
             );
         },
 
