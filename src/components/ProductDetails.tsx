@@ -11,8 +11,8 @@ type Product = {
     onSale: number;
     inventory: number;
     quantity: number;
-    sizes: [];
-    colors: [];
+    sizes: string[];
+    colors: string[];
 };
 
 export default function ProductDetails({ product }: { product: Product }) {
@@ -35,8 +35,8 @@ export default function ProductDetails({ product }: { product: Product }) {
             <p className="text-lg text-brown-600">In stock: {product.inventory}</p>
             {product.onSale > 0 && <p className="text-lg text-green-600">{product.onSale}% OFF!</p>}
 
-            <SizeDropdown sizes={product.sizes} />
-            <ColorSelector colors={product.colors} />
+            {product.sizes.length > 0 && <SizeDropdown sizes={product.sizes} />}
+            {product.colors.length > 0 && <ColorSelector colors={product.colors} />}
         </div>
     );
 }
