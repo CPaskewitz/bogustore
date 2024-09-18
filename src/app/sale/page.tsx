@@ -14,6 +14,8 @@ type Product = {
     onSale: number;
     inventory: number;
     quantity: number;
+    sizes: string[];
+    colors: string[];
 };
 
 export default function SaleProductsPage() {
