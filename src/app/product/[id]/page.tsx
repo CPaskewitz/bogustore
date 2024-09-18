@@ -7,6 +7,8 @@ import ProductDetails from '../../../components/ProductDetails';
 import QuantityButton from '../../../components/QuantityButton';
 import RelatedProducts from '../../../components/RelatedProducts';
 import SaleTag from '../../../components/SaleTag';
+import SizeDropdown from '../../../components/SizeDropDown';
+import ColorSelector from '../../../components/ColorSelector';
 import { RootState } from '../../../store';
 import { updateCartQuantity } from '../../../store/cartSlice';
 
@@ -17,9 +19,11 @@ type Product = {
     details: string;
     price: number;
     category: string;
-    onSale: boolean;
+    onSale: number;
     inventory: number;
     quantity: number;
+    sizes: string[];
+    colors: string[];
 };
 
 export default function ProductPage({ params }: { params: { id: string } }) {
@@ -53,11 +57,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex items-start">
                     <ProductImage imageUrl={`/${product.image}`} alt={product.title}>
-                        {product.onSale && <SaleTag />}
+                        {product.onSale > 0 && <SaleTag discount={product.onSale} />}
                     </ProductImage>
                 </div>
                 <div className="flex flex-col justify-between" style={{ minHeight: '400px' }}>
                     <ProductDetails product={product} />
+                    {product.sizes.length > 0 && <SizeDropdown sizes={product.sizes} />}
+                    {product.colors.length > 0 && <ColorSelector colors={product.colors} />}
                     <QuantityButton product={product} handleUpdateQuantity={handleUpdateQuantity} />
                 </div>
             </div>
