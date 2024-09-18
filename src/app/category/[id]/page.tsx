@@ -11,9 +11,11 @@ type Product = {
     details: string;
     price: number;
     category: string;
-    onSale: boolean;
+    onSale: number;
     inventory: number;
     quantity: number;
+    sizes: string[];
+    colors: string[];
 };
 
 export default function CategoryPage({ params }: { params: { id: string } }) {
@@ -37,7 +39,7 @@ export default function CategoryPage({ params }: { params: { id: string } }) {
 
     return (
         <main className="p-8 bg-beige-100 min-h-screen">
-            <h1 className="text-3xl font-bold mb-6">Products in {id}</h1>
+            <h1 className="text-3xl font-bold mb-6 capitalize">Products in {id}</h1>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {currentProducts.map(product => (
                     <ProductCard key={product.id} product={product} />
