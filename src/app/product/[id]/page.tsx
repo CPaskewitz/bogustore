@@ -7,8 +7,6 @@ import ProductDetails from '../../../components/ProductDetails';
 import QuantityButton from '../../../components/QuantityButton';
 import RelatedProducts from '../../../components/RelatedProducts';
 import SaleTag from '../../../components/SaleTag';
-import SizeDropdown from '../../../components/SizeDropDown';
-import ColorSelector from '../../../components/ColorSelector';
 import { RootState } from '../../../store';
 import { updateCartQuantity } from '../../../store/cartSlice';
 
@@ -62,8 +60,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </div>
                 <div className="flex flex-col justify-between" style={{ minHeight: '400px' }}>
                     <ProductDetails product={product} />
-                    {product.sizes.length > 0 && <SizeDropdown sizes={product.sizes} />}
-                    {product.colors.length > 0 && <ColorSelector colors={product.colors} />}
                     <QuantityButton product={product} handleUpdateQuantity={handleUpdateQuantity} />
                 </div>
             </div>
