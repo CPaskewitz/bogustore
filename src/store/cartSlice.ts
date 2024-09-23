@@ -22,7 +22,7 @@ type ShippingInfo = {
     email: string;
 };
 
-type CartState = {
+export type CartState = {
     cartItems: Product[];
     shippingInfo: ShippingInfo | null;
 };
