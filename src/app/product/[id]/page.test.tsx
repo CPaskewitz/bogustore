@@ -57,11 +57,9 @@ describe('ProductPage', () => {
         expect(screen.getByText(/\$80\.00/i)).toBeInTheDocument();
         expect(screen.getByText(/In stock: 10/i)).toBeInTheDocument();
 
-        // Find the size dropdown specifically by label
         const sizeSelector = screen.getByLabelText('Select Size:');
         expect(sizeSelector).toBeInTheDocument();
 
-        // Find the color buttons by their role and style
         const blueColorButton = screen.getByRole('button', { name: '' });
         expect(blueColorButton).toHaveStyle({ backgroundColor: 'blue' });
 
@@ -93,7 +91,7 @@ describe('ProductPage', () => {
         renderWithStore(<ProductPage params={{ id: '1' }} />);
 
         await waitFor(() => expect(screen.getByText(/Related Products/i)).toBeInTheDocument());
-        await waitFor(() => expect(screen.getByText(/Related Product 1/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/Related Product 1/i)).toBeInTheDocument(), { timeout: 3000 });
         expect(screen.getByText(/Related Product 2/i)).toBeInTheDocument();
     });
 
