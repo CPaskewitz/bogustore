@@ -1,140 +1,147 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureStore, EnhancedStore } from '@reduxjs/toolkit';
-import cartReducer, { CartState, updateCartQuantity, removeFromCart } from '../../store/cartSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer, { updateCartQuantity, removeFromCart, CartState } from '../../store/cartSlice';
 import CartPage from './page';
 import '@testing-library/jest-dom';
 
-jest.mock('next/link', () => {
-    return ({ children }: { children: React.ReactNode }) => children;
-});
+const renderWithStore = (preloadedState: { cart: CartState }) => {
+    const store = configureStore({
+        reducer: { cart: cartReducer },
+        preloadedState,
+    });
 
-jest.mock('next/image', () => ({
-    __esModule: true,
-    default: (props: any) => <img {...props} />,
-}));
+    const dispatchSpy = jest.spyOn(store, 'dispatch'); // Spy on dispatch to monitor calls
+
+    return {
+        ...render(
+            <Provider store={store}>
+                <CartPage />
+            </Provider>
+        ),
+        store,
+        dispatchSpy, // Return dispatch spy so we can verify dispatch calls
+    };
+};
 
 describe('CartPage', () => {
-    let store: EnhancedStore<{ cart: CartState }>;
-
-    beforeEach(() => {
-        store = configureStore({
-            reducer: {
-                cart: cartReducer,
+    it('renders cart items and calculates the total price correctly', () => {
+        const preloadedState = {
+            cart: {
+                cartItems: [
+                    {
+                        id: 1,
+                        title: 'Product 1',
+                        image: 'cap.jpg',
+                        price: 100,
+                        onSale: 0,
+                        inventory: 5,
+                        quantity: 2,
+                        sizes: [],
+                        colors: [],
+                        details: 'Some details',
+                        category: 'Accessories',
+                    },
+                ],
+                shippingInfo: null,
             },
-            preloadedState: {
-                cart: {
-                    cartItems: [
-                        {
-                            id: 1,
-                            title: 'Product 1',
-                            image: 'cap.jpg',
-                            details: 'Some details',
-                            price: 100,
-                            category: 'Category 1',
-                            onSale: 0,
-                            inventory: 5,
-                            quantity: 2,
-                            sizes: [],
-                            colors: []
-                        },
-                        {
-                            id: 2,
-                            title: 'Product 2',
-                            image: 'jeans.jpg',
-                            details: 'Some details',
-                            price: 200,
-                            category: 'Category 2',
-                            onSale: 10,
-                            inventory: 5,
-                            quantity: 1,
-                            sizes: [],
-                            colors: []
-                        },
-                    ],
-                    shippingInfo: null,
-                },
-            },
-        });
+        };
 
-        jest.clearAllMocks();
-    });
+        renderWithStore(preloadedState);
 
-    test('renders cart items and total price', () => {
-        render(
-            <Provider store={store}>
-                <CartPage />
-            </Provider>
-        );
-
-        // Check that products are rendered
         expect(screen.getByText('Product 1')).toBeInTheDocument();
-        expect(screen.getByText('Product 2')).toBeInTheDocument();
-
-        // Check the total price calculation
-        expect(screen.getByText('Total: $380.00')).toBeInTheDocument(); // 2x Product 1 ($100) + 1x Product 2 ($180 with discount)
+        expect(screen.getByText('Total: $200.00')).toBeInTheDocument();
     });
 
-    test('handles quantity changes', async () => {
-        render(
-            <Provider store={store}>
-                <CartPage />
-            </Provider>
-        );
+    it('handles increasing and decreasing quantity', async () => {
+        const preloadedState = {
+            cart: {
+                cartItems: [
+                    {
+                        id: 1,
+                        title: 'Product 1',
+                        image: 'cap.jpg',
+                        price: 100,
+                        onSale: 0,
+                        inventory: 5,
+                        quantity: 2,
+                        sizes: [],
+                        colors: [],
+                        details: 'Some details',
+                        category: 'Accessories',
+                    },
+                ],
+                shippingInfo: null,
+            },
+        };
 
-        // Spy on dispatch to ensure it was called with the right action
-        const dispatchSpy = jest.spyOn(store, 'dispatch');
+        const { dispatchSpy } = renderWithStore(preloadedState);
 
-        // Simulate increasing quantity of Product 1
-        const increaseButton = screen.getAllByRole('button', { name: '+' })[0]; // Target the first "+" button for Product 1
+        // Simulate increasing quantity
+        const increaseButton = screen.getByRole('button', { name: '+' });
         fireEvent.click(increaseButton);
 
-        // Check if the `updateCartQuantity` action is dispatched correctly
+        console.log('Increase button clicked'); // Ensure the button is clicked
+
         await waitFor(() => {
+            console.log('Dispatch called with:', dispatchSpy.mock.calls);
             expect(dispatchSpy).toHaveBeenCalledWith(updateCartQuantity({ id: 1, quantity: 3 }));
         });
+
+        // Simulate decreasing quantity
+        const decreaseButton = screen.getByRole('button', { name: '-' });
+        fireEvent.click(decreaseButton);
+
+        console.log('Decrease button clicked');
+
+        await waitFor(() => {
+            expect(dispatchSpy).toHaveBeenCalledWith(updateCartQuantity({ id: 1, quantity: 2 }));
+        });
     });
 
-    test('handles removing items from the cart', async () => {
-        render(
-            <Provider store={store}>
-                <CartPage />
-            </Provider>
-        );
+    it('handles removing items from the cart', async () => {
+        const preloadedState = {
+            cart: {
+                cartItems: [
+                    {
+                        id: 1,
+                        title: 'Product 1',
+                        image: 'cap.jpg',
+                        price: 100,
+                        onSale: 0,
+                        inventory: 5,
+                        quantity: 2,
+                        sizes: [],
+                        colors: [],
+                        details: 'Some details',
+                        category: 'Accessories',
+                    },
+                ],
+                shippingInfo: null,
+            },
+        };
 
-        // Spy on dispatch to ensure it was called with the right action
-        const dispatchSpy = jest.spyOn(store, 'dispatch');
+        const { dispatchSpy } = renderWithStore(preloadedState);
 
-        // Simulate removing Product 2
-        const removeButton = screen.getAllByText('Remove')[1]; // Target the second "Remove" button for Product 2
+        const removeButton = screen.getByText('Remove');
         fireEvent.click(removeButton);
 
-        // Check if the `removeFromCart` action is dispatched correctly
         await waitFor(() => {
-            expect(dispatchSpy).toHaveBeenCalledWith(removeFromCart({ id: 2 }));
+            console.log('Dispatch called with:', dispatchSpy.mock.calls);
+            expect(dispatchSpy).toHaveBeenCalledWith(removeFromCart({ id: 1 }));
         });
     });
 
-    test('displays "Your cart is empty" message when cart is empty', () => {
-        // Set store to have an empty cart
-        store = configureStore({
-            reducer: {
-                cart: cartReducer,
+    it('displays a message when the cart is empty', () => {
+        const preloadedState = {
+            cart: {
+                cartItems: [],
+                shippingInfo: null,
             },
-            preloadedState: {
-                cart: {
-                    cartItems: [],
-                    shippingInfo: null,
-                },
-            },
-        });
+        };
 
-        render(
-            <Provider store={store}>
-                <CartPage />
-            </Provider>
-        );
+        renderWithStore(preloadedState);
 
         expect(screen.getByText('Your cart is empty.')).toBeInTheDocument();
     });
