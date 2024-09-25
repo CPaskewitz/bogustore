@@ -1,3 +1,4 @@
+import React from 'react';
 import ProductList from '../components/ProductList';
 import Promotion from '../components/Promotion';
 import CategoryList from '../components/CategoryList';
