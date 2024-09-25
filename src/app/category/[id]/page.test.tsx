@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import CategoryPage from '@/app/category/[id]/page';
 import ProductCard from '@/components/ProductCard';
 import Pagination from '@/components/Pagination';
@@ -33,10 +33,11 @@ describe('CategoryPage', () => {
     });
 
     it('renders product cards and pagination', async () => {
-        render(<CategoryPage params={{ id: 'category1' }} />);
+        await act(async () => {
+            render(<CategoryPage params={{ id: 'category1' }} />);
+        });
 
         await waitFor(() => expect(screen.getByText(/Products in category1/i)).toBeInTheDocument());
-
         await waitFor(() => expect(screen.getByText(/Product 1/i)).toBeInTheDocument());
         await waitFor(() => expect(screen.getByText(/Product 9/i)).toBeInTheDocument());
 
@@ -45,13 +46,16 @@ describe('CategoryPage', () => {
     });
 
     it('handles pagination', async () => {
-        render(<CategoryPage params={{ id: 'category1' }} />);
+        await act(async () => {
+            render(<CategoryPage params={{ id: 'category1' }} />);
+        });
 
         await waitFor(() => expect(screen.getByText(/Products in category1/i)).toBeInTheDocument());
-
         expect(screen.getByText('2')).toBeInTheDocument();
 
-        fireEvent.click(screen.getByText('2'));
+        await act(async () => {
+            fireEvent.click(screen.getByText('2'));
+        });
 
         await waitFor(() => expect(screen.getByText('Product 10')).toBeInTheDocument());
         expect(screen.getByText('Product 11')).toBeInTheDocument();
@@ -61,7 +65,9 @@ describe('CategoryPage', () => {
         jest.spyOn(console, 'error').mockImplementation(() => { });
         global.fetch = jest.fn(() => Promise.reject(new Error('API fetch failed')));
 
-        render(<CategoryPage params={{ id: 'category1' }} />);
+        await act(async () => {
+            render(<CategoryPage params={{ id: 'category1' }} />);
+        });
 
         await waitFor(() => {
             expect(console.error).toHaveBeenCalledWith('Error fetching category products:', expect.any(Error));
@@ -86,7 +92,6 @@ describe('ProductCard Component', () => {
 
     it('renders product information', () => {
         render(<ProductCard product={mockProduct} />);
-
         expect(screen.getByText('Product 1')).toBeInTheDocument();
         expect(screen.getByText('$100.00')).toBeInTheDocument();
     });
@@ -109,11 +114,13 @@ describe('Pagination Component', () => {
         expect(screen.getByText('3')).toBeInTheDocument();
     });
 
-    it('handles page change on button click', () => {
+    it('handles page change on button click', async () => {
         const mockOnPageChange = jest.fn();
         render(<Pagination currentPage={1} totalPages={3} onPageChange={mockOnPageChange} />);
 
-        fireEvent.click(screen.getByText('2'));
+        await act(async () => {
+            fireEvent.click(screen.getByText('2'));
+        });
         expect(mockOnPageChange).toHaveBeenCalledWith(2);
     });
 });
