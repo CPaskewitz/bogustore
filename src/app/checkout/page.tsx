@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { setShippingInfo } from '../../store/cartSlice';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const ShippingSchema = Yup.object().shape({
     fullName: Yup.string().required('Full name is required'),
@@ -24,8 +24,8 @@ export default function CheckoutPage() {
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [paymentComplete, setPaymentComplete] = useState(false);
     const dispatch = useDispatch();
-    const router = useRouter();
 
     const shippingFormik = useFormik({
         initialValues: {
@@ -51,7 +51,7 @@ export default function CheckoutPage() {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-                router.push('/checkout/success');
+                setPaymentComplete(true);
             }, 2000);
         },
     });
@@ -68,6 +68,7 @@ export default function CheckoutPage() {
                         <input
                             type="text"
                             name="fullName"
+                            id="fullName"
                             placeholder="John Doe"
                             onChange={shippingFormik.handleChange}
                             onBlur={shippingFormik.handleBlur}
@@ -83,6 +84,7 @@ export default function CheckoutPage() {
                         <input
                             type="text"
                             name="address"
+                            id="address"
                             placeholder="1234 Main St, Apartment 101"
                             onChange={shippingFormik.handleChange}
                             onBlur={shippingFormik.handleBlur}
@@ -98,6 +100,7 @@ export default function CheckoutPage() {
                         <input
                             type="email"
                             name="email"
+                            id="email"
                             placeholder="johndoe@example.com"
                             onChange={shippingFormik.handleChange}
                             onBlur={shippingFormik.handleBlur}
@@ -115,75 +118,86 @@ export default function CheckoutPage() {
             )}
 
             {step === 2 && (
-                <form onSubmit={paymentFormik.handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto mt-6">
-                    <h2 className="text-xl font-semibold mb-4">Payment Information</h2>
-                    <div className="mb-4">
-                        <label className="block text-brown-800">Card Number</label>
-                        <input
-                            type="text"
-                            name="cardNumber"
-                            placeholder="4242 4242 4242 4242"
-                            onChange={paymentFormik.handleChange}
-                            onBlur={paymentFormik.handleBlur}
-                            value={paymentFormik.values.cardNumber}
-                            className="w-full border px-3 py-2 rounded-lg text-brown-800"
-                        />
-                        {paymentFormik.touched.cardNumber && paymentFormik.errors.cardNumber && (
-                            <p className="text-red-500 text-sm">{paymentFormik.errors.cardNumber}</p>
-                        )}
-                    </div>
-                    <div className="flex gap-4 mb-4">
-                        <div className="w-1/2">
-                            <label className="block text-brown-800">Expiry Date</label>
-                            <input
-                                type="text"
-                                name="expiryDate"
-                                placeholder="12/24"
-                                onChange={paymentFormik.handleChange}
-                                onBlur={paymentFormik.handleBlur}
-                                value={paymentFormik.values.expiryDate}
-                                className="w-full border px-3 py-2 rounded-lg text-brown-800"
-                            />
-                            {paymentFormik.touched.expiryDate && paymentFormik.errors.expiryDate && (
-                                <p className="text-red-500 text-sm">{paymentFormik.errors.expiryDate}</p>
-                            )}
-                        </div>
-                        <div className="w-1/2">
-                            <label className="block text-brown-800">CVV</label>
-                            <input
-                                type="text"
-                                name="cvv"
-                                placeholder="123"
-                                onChange={paymentFormik.handleChange}
-                                onBlur={paymentFormik.handleBlur}
-                                value={paymentFormik.values.cvv}
-                                className="w-full border px-3 py-2 rounded-lg text-brown-800"
-                            />
-                            {paymentFormik.touched.cvv && paymentFormik.errors.cvv && (
-                                <p className="text-red-500 text-sm">{paymentFormik.errors.cvv}</p>
-                            )}
-                        </div>
-                    </div>
+                <>
+                    {!paymentComplete ? (
+                        <form onSubmit={paymentFormik.handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto mt-6">
+                            <h2 className="text-xl font-semibold mb-4">Payment Information</h2>
+                            <div className="mb-4">
+                                <label className="block text-brown-800">Card Number</label>
+                                <input
+                                    type="text"
+                                    name="cardNumber"
+                                    id="cardNumber"
+                                    placeholder="4242 4242 4242 4242"
+                                    onChange={paymentFormik.handleChange}
+                                    onBlur={paymentFormik.handleBlur}
+                                    value={paymentFormik.values.cardNumber}
+                                    className="w-full border px-3 py-2 rounded-lg text-brown-800"
+                                />
+                                {paymentFormik.touched.cardNumber && paymentFormik.errors.cardNumber && (
+                                    <p className="text-red-500 text-sm">{paymentFormik.errors.cardNumber}</p>
+                                )}
+                            </div>
+                            <div className="flex gap-4 mb-4">
+                                <div className="w-1/2">
+                                    <label className="block text-brown-800">Expiry Date</label>
+                                    <input
+                                        type="text"
+                                        name="expiryDate"
+                                        id="expiryDate"
+                                        placeholder="12/24"
+                                        onChange={paymentFormik.handleChange}
+                                        onBlur={paymentFormik.handleBlur}
+                                        value={paymentFormik.values.expiryDate}
+                                        className="w-full border px-3 py-2 rounded-lg text-brown-800"
+                                    />
+                                    {paymentFormik.touched.expiryDate && paymentFormik.errors.expiryDate && (
+                                        <p className="text-red-500 text-sm">{paymentFormik.errors.expiryDate}</p>
+                                    )}
+                                </div>
+                                <div className="w-1/2">
+                                    <label className="block text-brown-800">CVV</label>
+                                    <input
+                                        type="text"
+                                        name="cvv"
+                                        id="cvv"
+                                        placeholder="123"
+                                        onChange={paymentFormik.handleChange}
+                                        onBlur={paymentFormik.handleBlur}
+                                        value={paymentFormik.values.cvv}
+                                        className="w-full border px-3 py-2 rounded-lg text-brown-800"
+                                    />
+                                    {paymentFormik.touched.cvv && paymentFormik.errors.cvv && (
+                                        <p className="text-red-500 text-sm">{paymentFormik.errors.cvv}</p>
+                                    )}
+                                </div>
+                            </div>
 
-                    {loading && (
-                        <div className="bg-yellow-100 p-4 rounded-lg mb-4">
-                            <p className="text-yellow-600">Processing payment, please wait...</p>
-                        </div>
+                            {loading && (
+                                <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+                                    <p className="text-yellow-600">Processing payment, please wait...</p>
+                                </div>
+                            )}
+
+                            <div className="flex justify-between items-center">
+                                <button
+                                    type="button"
+                                    onClick={() => setStep(1)}
+                                    className="bg-gray-300 text-brown-800 px-4 py-2 rounded-lg"
+                                >
+                                    Back to Shipping
+                                </button>
+                                <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-lg" disabled={loading}>
+                                    Submit Payment
+                                </button>
+                            </div>
+                        </form>
+                    ) : (
+                            <Link href="/checkout/success" className="bg-green-500 text-white py-3 px-6 rounded-lg">
+                                Continue
+                            </Link>
                     )}
-
-                    <div className="flex justify-between items-center">
-                        <button
-                            type="button"
-                            onClick={() => setStep(1)}
-                            className="bg-gray-300 text-brown-800 px-4 py-2 rounded-lg"
-                        >
-                            Back to Shipping
-                        </button>
-                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-lg" disabled={loading}>
-                            Submit Payment
-                        </button>
-                    </div>
-                </form>
+                </>
             )}
         </main>
     );
