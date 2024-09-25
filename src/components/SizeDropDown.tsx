@@ -9,7 +9,9 @@ type SizeDropdownProps = {
 export default function SizeDropdown({ sizes, selectedSize, onSizeChange }: SizeDropdownProps) {
     return (
         <div className="mb-4">
-            <label className="block text-brown-800 font-semibold">Select Size:</label>
+            <label htmlFor="size-select" className="block text-brown-800 font-semibold">
+                Select Size:
+            </label>
             <select
                 id="size-select"
                 value={selectedSize || ''}
