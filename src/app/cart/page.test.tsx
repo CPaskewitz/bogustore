@@ -12,7 +12,7 @@ const renderWithStore = (preloadedState: { cart: CartState }) => {
         preloadedState,
     });
 
-    const dispatchSpy = jest.spyOn(store, 'dispatch'); // Spy on dispatch to monitor calls
+    const dispatchSpy = jest.spyOn(store, 'dispatch');
 
     return {
         ...render(
@@ -21,7 +21,7 @@ const renderWithStore = (preloadedState: { cart: CartState }) => {
             </Provider>
         ),
         store,
-        dispatchSpy, // Return dispatch spy so we can verify dispatch calls
+        dispatchSpy,
     };
 };
 
@@ -82,18 +82,13 @@ describe('CartPage', () => {
         const increaseButton = screen.getByRole('button', { name: '+' });
         fireEvent.click(increaseButton);
 
-        console.log('Increase button clicked'); // Ensure the button is clicked
-
         await waitFor(() => {
-            console.log('Dispatch called with:', dispatchSpy.mock.calls);
             expect(dispatchSpy).toHaveBeenCalledWith(updateCartQuantity({ id: 1, quantity: 3 }));
         });
 
         // Simulate decreasing quantity
         const decreaseButton = screen.getByRole('button', { name: '-' });
         fireEvent.click(decreaseButton);
-
-        console.log('Decrease button clicked');
 
         await waitFor(() => {
             expect(dispatchSpy).toHaveBeenCalledWith(updateCartQuantity({ id: 1, quantity: 2 }));
@@ -128,7 +123,6 @@ describe('CartPage', () => {
         fireEvent.click(removeButton);
 
         await waitFor(() => {
-            console.log('Dispatch called with:', dispatchSpy.mock.calls);
             expect(dispatchSpy).toHaveBeenCalledWith(removeFromCart({ id: 1 }));
         });
     });
