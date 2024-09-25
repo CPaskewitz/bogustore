@@ -60,11 +60,11 @@ describe('ProductPage', () => {
         const sizeSelector = screen.getByLabelText('Select Size:');
         expect(sizeSelector).toBeInTheDocument();
 
-        const blueColorButton = screen.getByRole('button', { name: '' });
+        const blueColorButton = screen.getByRole('button', { name: 'Select color blue' });
         expect(blueColorButton).toHaveStyle({ backgroundColor: 'blue' });
 
-        const redColorButton = screen.getAllByRole('button', { name: '' }).find((btn) => btn.style.backgroundColor === 'red');
-        expect(redColorButton).toBeInTheDocument();
+        const redColorButton = screen.getByRole('button', { name: 'Select color red' });
+        expect(redColorButton).toHaveStyle({ backgroundColor: 'red' });
     });
 
     it('adds to cart and adjusts quantity', async () => {
