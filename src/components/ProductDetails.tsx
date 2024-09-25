@@ -42,8 +42,25 @@ export default function ProductDetails({ product }: { product: Product }) {
             {product.onSale > 0 && <p className="text-lg text-green-600">{product.onSale}% OFF!</p>}
 
             {product.sizes.length > 0 && (
-                <SizeDropdown sizes={product.sizes} selectedSize={selectedSize} onSizeChange={setSelectedSize} />
+                <div className="mb-4">
+                    <label htmlFor="size-select" className="block text-brown-800 font-semibold">
+                        Select Size:
+                    </label>
+                    <select
+                        id="size-select"
+                        value={selectedSize}
+                        onChange={(e) => setSelectedSize(e.target.value)}
+                        className="border px-3 py-2 rounded-lg w-full text-brown-800"
+                    >
+                        {product.sizes.map((size) => (
+                            <option key={size} value={size}>
+                                {size}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             )}
+
             {product.colors.length > 0 && (
                 <ColorSelector colors={product.colors} selectedColor={selectedColor} onColorChange={setSelectedColor} />
             )}
