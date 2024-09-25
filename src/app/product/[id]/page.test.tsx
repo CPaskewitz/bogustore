@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import ProductPage from '@/app/product/[id]/page';
 import ProductImage from '@/components/ProductImage';
 import ProductDetails from '@/components/ProductDetails';
@@ -74,7 +74,9 @@ describe('ProductPage', () => {
     });
 
     it('renders product details and components', async () => {
-        renderWithStore(<ProductPage params={{ id: '1' }} />);
+        await act(async () => {
+            renderWithStore(<ProductPage params={{ id: '1' }} />);
+        });
 
         await waitFor(() => expect(screen.getByText(/Test Product/i)).toBeInTheDocument());
         expect(screen.getByText(/A great product/i)).toBeInTheDocument();
@@ -92,27 +94,37 @@ describe('ProductPage', () => {
     });
 
     it('adds to cart and adjusts quantity', async () => {
-        renderWithStore(<ProductPage params={{ id: '1' }} />);
+        await act(async () => {
+            renderWithStore(<ProductPage params={{ id: '1' }} />);
+        });
 
         await waitFor(() => expect(screen.getByText(/Add to Cart/i)).toBeInTheDocument());
 
         const addToCartButton = screen.getByText(/Add to Cart/i);
-        fireEvent.click(addToCartButton);
+        await act(async () => {
+            fireEvent.click(addToCartButton);
+        });
 
         const quantityDisplay = screen.getByText('1', { selector: 'span' });
         expect(quantityDisplay).toBeInTheDocument();
 
         const incrementButton = screen.getByText(/\+/);
-        fireEvent.click(incrementButton);
+        await act(async () => {
+            fireEvent.click(incrementButton);
+        });
         await waitFor(() => expect(screen.getByText('2', { selector: 'span' })).toBeInTheDocument());
 
         const decrementButton = screen.getByText(/-/);
-        fireEvent.click(decrementButton);
+        await act(async () => {
+            fireEvent.click(decrementButton);
+        });
         await waitFor(() => expect(screen.getByText('1', { selector: 'span' })).toBeInTheDocument());
     });
 
     it('displays related products', async () => {
-        renderWithStore(<ProductPage params={{ id: '1' }} />);
+        await act(async () => {
+            renderWithStore(<ProductPage params={{ id: '1' }} />);
+        });
 
         await waitFor(() => expect(screen.getByText(/Related Products/i)).toBeInTheDocument());
         await waitFor(() => expect(screen.getByText(/Related Product 1/i)).toBeInTheDocument(), { timeout: 3000 });
@@ -123,7 +135,9 @@ describe('ProductPage', () => {
         jest.spyOn(console, 'error').mockImplementation(() => { });
         global.fetch = jest.fn(() => Promise.reject(new Error('API fetch failed')));
 
-        renderWithStore(<ProductPage params={{ id: '1' }} />);
+        await act(async () => {
+            renderWithStore(<ProductPage params={{ id: '1' }} />);
+        });
 
         await waitFor(() => {
             expect(console.error).toHaveBeenCalledWith('Error fetching product:', expect.any(Error));
@@ -176,8 +190,10 @@ describe('QuantityButton Component', () => {
         colors: ['blue', 'red'],
     };
 
-    it('renders quantity buttons and handles adding to cart', () => {
-        renderWithStore(<QuantityButton product={mockProduct} handleUpdateQuantity={jest.fn()} />);
+    it('renders quantity buttons and handles adding to cart', async () => {
+        await act(async () => {
+            renderWithStore(<QuantityButton product={mockProduct} handleUpdateQuantity={jest.fn()} />);
+        });
         expect(screen.getByText(/Add to Cart/i)).toBeInTheDocument();
     });
 });
@@ -197,7 +213,9 @@ describe('RelatedProducts Component', () => {
     });
 
     it('renders related products', async () => {
-        render(<RelatedProducts category="TestCategory" currentProductId={1} />);
+        await act(async () => {
+            render(<RelatedProducts category="TestCategory" currentProductId={1} />);
+        });
         await waitFor(() => expect(screen.getByText(/Related Product 1/i)).toBeInTheDocument());
         expect(screen.getByText(/Related Product 2/i)).toBeInTheDocument();
     });
