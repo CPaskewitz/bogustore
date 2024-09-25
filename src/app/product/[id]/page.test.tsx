@@ -39,8 +39,8 @@ describe('ProductPage', () => {
                     ok: true,
                     status: 200,
                     json: () => Promise.resolve([
-                        { id: 2, title: 'Related Product 1', image: 'related1.jpg' },
-                        { id: 3, title: 'Related Product 2', image: 'related2.jpg' },
+                        { id: 2, title: 'Related Product 1', image: 'related1.jpg', price: 150 },
+                        { id: 3, title: 'Related Product 2', image: 'related2.jpg', price: 180 },
                     ]),
                 } as Response);
             }
@@ -154,8 +154,8 @@ describe('RelatedProducts Component', () => {
                 ok: true,
                 status: 200,
                 json: () => Promise.resolve([
-                    { id: 2, title: 'Related Product 1', image: 'related1.jpg' },
-                    { id: 3, title: 'Related Product 2', image: 'related2.jpg' },
+                    { id: 2, title: 'Related Product 1', image: 'related1.jpg', price: 150 },
+                    { id: 3, title: 'Related Product 2', image: 'related2.jpg', price: 180 },
                 ]),
             } as Response)
         );
