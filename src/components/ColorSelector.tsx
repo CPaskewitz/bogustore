@@ -1,3 +1,5 @@
+import React from "react";
+
 type ColorSelectorProps = {
     colors: string[];
     selectedColor: string | null | undefined;

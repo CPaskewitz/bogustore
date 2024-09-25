@@ -1,3 +1,5 @@
+import React from "react";
+
 type SizeDropdownProps = {
     sizes: string[];
     selectedSize: string | null | undefined;
