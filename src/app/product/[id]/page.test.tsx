@@ -39,8 +39,8 @@ describe('ProductPage', () => {
                     ok: true,
                     status: 200,
                     json: () => Promise.resolve([
-                        { id: 2, title: 'Related Product 1', image: 'related1.jpg', price: 150 },
-                        { id: 3, title: 'Related Product 2', image: 'related2.jpg', price: 180 },
+                        { id: 2, title: 'Related Product 1', image: 'related1.jpg' },
+                        { id: 3, title: 'Related Product 2', image: 'related2.jpg' },
                     ]),
                 } as Response);
             }
@@ -56,8 +56,17 @@ describe('ProductPage', () => {
         expect(screen.getByText(/A great product/i)).toBeInTheDocument();
         expect(screen.getByText(/\$80\.00/i)).toBeInTheDocument();
         expect(screen.getByText(/In stock: 10/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Select Size:/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Select Color:/i)).toBeInTheDocument();
+
+        // Find the size dropdown specifically by label
+        const sizeSelector = screen.getByLabelText('Select Size:');
+        expect(sizeSelector).toBeInTheDocument();
+
+        // Find the color buttons by their role and style
+        const blueColorButton = screen.getByRole('button', { name: '' });
+        expect(blueColorButton).toHaveStyle({ backgroundColor: 'blue' });
+
+        const redColorButton = screen.getAllByRole('button', { name: '' }).find((btn) => btn.style.backgroundColor === 'red');
+        expect(redColorButton).toBeInTheDocument();
     });
 
     it('adds to cart and adjusts quantity', async () => {
@@ -65,15 +74,19 @@ describe('ProductPage', () => {
 
         await waitFor(() => expect(screen.getByText(/Add to Cart/i)).toBeInTheDocument());
 
-        fireEvent.click(screen.getByText(/Add to Cart/i));
+        const addToCartButton = screen.getByText(/Add to Cart/i);
+        fireEvent.click(addToCartButton);
 
-        await waitFor(() => expect(screen.getByText(/1/)).toBeInTheDocument());
+        const quantityDisplay = screen.getByText('1', { selector: 'span' });
+        expect(quantityDisplay).toBeInTheDocument();
 
-        fireEvent.click(screen.getByText(/\+/));
-        await waitFor(() => expect(screen.getByText(/2/)).toBeInTheDocument());
+        const incrementButton = screen.getByText(/\+/);
+        fireEvent.click(incrementButton);
+        await waitFor(() => expect(screen.getByText('2', { selector: 'span' })).toBeInTheDocument());
 
-        fireEvent.click(screen.getByText(/-/));
-        await waitFor(() => expect(screen.getByText(/1/)).toBeInTheDocument());
+        const decrementButton = screen.getByText(/-/);
+        fireEvent.click(decrementButton);
+        await waitFor(() => expect(screen.getByText('1', { selector: 'span' })).toBeInTheDocument());
     });
 
     it('displays related products', async () => {
