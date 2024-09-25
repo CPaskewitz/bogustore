@@ -78,7 +78,6 @@ describe('CartPage', () => {
 
         const { dispatchSpy } = renderWithStore(preloadedState);
 
-        // Simulate increasing quantity
         const increaseButton = screen.getByRole('button', { name: '+' });
         fireEvent.click(increaseButton);
 
@@ -86,7 +85,6 @@ describe('CartPage', () => {
             expect(dispatchSpy).toHaveBeenCalledWith(updateCartQuantity({ id: 1, quantity: 3 }));
         });
 
-        // Simulate decreasing quantity
         const decreaseButton = screen.getByRole('button', { name: '-' });
         fireEvent.click(decreaseButton);
 
