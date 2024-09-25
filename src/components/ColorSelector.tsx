@@ -13,9 +13,10 @@ export default function ColorSelector({ colors, selectedColor, onColorChange }: 
             <div className="flex gap-2 mt-2">
                 {colors.map((color, index) => (
                     <button
-                        key={index}
-                        className={`w-8 h-8 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-transparent'}`}
+                        key={color}
                         style={{ backgroundColor: color }}
+                        aria-label={`Select color ${color}`}
+                        className={`w-8 h-8 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-transparent'}`}
                         onClick={() => onColorChange(color)}
                     />
                 ))}
