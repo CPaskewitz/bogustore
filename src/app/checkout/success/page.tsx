@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store';
 import { clearCart } from '../../../store/cartSlice';
@@ -11,9 +11,6 @@ export default function SuccessPage() {
     const shippingInfoFromStore = useSelector((state: RootState) => state.cart.shippingInfo);
     const dispatch = useDispatch();
 
-    const [cartItems, setCartItems] = useState(cartItemsFromStore);
-    const [shippingInfo, setShippingInfo] = useState(shippingInfoFromStore);
-
     useEffect(() => {
         if (cartItemsFromStore.length > 0 && shippingInfoFromStore) {
             dispatch(clearCart());
@@ -21,7 +18,7 @@ export default function SuccessPage() {
     }, [cartItemsFromStore, shippingInfoFromStore, dispatch]);
 
     const calculateTotalPrice = () => {
-        return cartItems.reduce((total, product) => {
+        return cartItemsFromStore.reduce((total, product) => {
             const salePrice = product.onSale > 0 ? product.price * (1 - product.onSale / 100) : product.price;
             return total + salePrice * product.quantity;
         }, 0);
@@ -33,7 +30,7 @@ export default function SuccessPage() {
             <div className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
                 <h2 className="text-xl text-brown-800 font-semibold mb-4">Order Summary</h2>
                 <ul className="mb-4 text-brown-600">
-                    {cartItems.map((item, index) => {
+                    {cartItemsFromStore.map((item, index) => {
                         const salePrice = item.onSale > 0 ? item.price * (1 - item.onSale / 100) : item.price;
                         return (
                             <li key={`${item.id}-${item.size}-${item.color}-${index}`} className="mb-4">
