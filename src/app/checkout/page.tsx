@@ -66,7 +66,7 @@ export default function CheckoutPage() {
 
             {step === 1 && (
                 <form onSubmit={shippingFormik.handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
-                    <h2 className="text-xl font-semibold mb-4">Shipping Information</h2>
+                    <h2 className="text-xl text-brown-800 font-semibold mb-4">Shipping Information</h2>
                     <div className="mb-4">
                         <label className="block text-brown-800">Full Name</label>
                         <input
@@ -124,7 +124,7 @@ export default function CheckoutPage() {
             {step === 2 && (
                 <>
                     <form onSubmit={paymentFormik.handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto mt-6">
-                        <h2 className="text-xl font-semibold mb-4">Payment Information</h2>
+                        <h2 className="text-xl text-brown-800 font-semibold mb-4">Payment Information</h2>
                         <div className="mb-4">
                             <label className="block text-brown-800">Card Number</label>
                             <input
