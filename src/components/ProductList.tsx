@@ -36,14 +36,14 @@ export default function ProductList() {
                     acc[category].push(product);
 
                     if (product.onSale > 0) {
-                        if (!acc['On Sale']) acc['On Sale'] = [];
-                        acc['On Sale'].push(product);
+                        if (!acc['Today\'s Deals!']) acc['Today\'s Deals!'] = [];
+                        acc['Today\'s Deals!'].push(product);
                     }
 
                     return acc;
                 }, {});
 
-                const sortedCategories = { 'On Sale': grouped['On Sale'], ...grouped };
+                const sortedCategories = { 'Today\'s Deals!': grouped['Today\'s Deals!'], ...grouped };
                 setGroupedProducts(sortedCategories);
             })
             .catch(error => console.error('Error fetching products:', error));
