@@ -36,8 +36,7 @@ describe('CheckoutPage', () => {
             expect(screen.getByPlaceholderText('123')).toBeInTheDocument();
         });
     });
-
-    it('shows success link after payment submission', async () => {
+    it('renders the success page after successful payment', async () => {
         renderWithStore(<CheckoutPage />);
 
         act(() => {
@@ -47,23 +46,19 @@ describe('CheckoutPage', () => {
             fireEvent.click(screen.getByRole('button', { name: /Next: Payment/i }));
         });
 
-        await waitFor(() => screen.getByText(/Payment Information/i));
+        await waitFor(() => {
+            expect(screen.getByText(/Payment Information/i)).toBeInTheDocument();
+        });
 
         act(() => {
-            fireEvent.change(screen.getByPlaceholderText('4242 4242 4242 4242'), { target: { value: '4242 4242 4242 4242' } });
+            fireEvent.change(screen.getByPlaceholderText('4242 4242 4242 4242'), { target: { value: '4242424242424242' } });
             fireEvent.change(screen.getByPlaceholderText('12/24'), { target: { value: '12/24' } });
             fireEvent.change(screen.getByPlaceholderText('123'), { target: { value: '123' } });
             fireEvent.click(screen.getByRole('button', { name: /Submit Payment/i }));
         });
 
-        await waitFor(() => screen.getByText(/Processing payment, please wait.../i));
-
-        await act(async () => {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-        });
-
         await waitFor(() => {
-            expect(screen.getByRole('link', { name: /Continue/i })).toBeInTheDocument();
-        });
+            expect(screen.getByText(/Order Successful/i)).toBeInTheDocument();
+        }, { timeout: 2500 });
     });
 });
