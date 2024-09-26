@@ -77,7 +77,7 @@ export default function ProductList() {
                             style={{ maxHeight: '400px' }}
                         >
                             {groupedProducts[category].map((product) => (
-                                <div key={product.id} className="inline-block px-2 w-[280px]">
+                                <div key={product.id} className="inline-block px-2 h-auto w-[300px]">
                                     <ProductCard product={product} />
                                 </div>
                             ))}

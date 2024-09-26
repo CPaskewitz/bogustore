@@ -52,7 +52,7 @@ export default function RelatedProducts({ category, currentProductId }: { catego
                 </button>
                 <div ref={scrollRef} className="w-full overflow-x-scroll whitespace-nowrap py-4 relative">
                     {relatedProducts.map((product) => (
-                        <div key={product.id} className="inline-block px-2 w-[280px] h-[280px]">
+                        <div key={product.id} className="inline-block px-2 w-[300px] h-auto">
                             <ProductCard product={product} />
                         </div>
                     ))}
