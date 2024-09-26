@@ -52,7 +52,7 @@ describe('SaleProductsPage', () => {
     it('renders the sale products heading', async () => {
         renderWithStore(<SaleProductsPage />);
 
-        await waitFor(() => expect(screen.getByText(/Products on Sale/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/Today's Deals!/i)).toBeInTheDocument());
     });
 
     it('displays sale products', async () => {

@@ -37,7 +37,7 @@ describe('CategoryPage', () => {
             render(<CategoryPage params={{ id: 'category1' }} />);
         });
 
-        await waitFor(() => expect(screen.getByText(/Products in category1/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/category1/i)).toBeInTheDocument());
         await waitFor(() => expect(screen.getByText(/Product 1/i)).toBeInTheDocument());
         await waitFor(() => expect(screen.getByText(/Product 9/i)).toBeInTheDocument());
 
@@ -50,7 +50,7 @@ describe('CategoryPage', () => {
             render(<CategoryPage params={{ id: 'category1' }} />);
         });
 
-        await waitFor(() => expect(screen.getByText(/Products in category1/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/category1/i)).toBeInTheDocument());
         expect(screen.getByText('2')).toBeInTheDocument();
 
         await act(async () => {

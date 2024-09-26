@@ -111,7 +111,7 @@ describe('ProductList Component', () => {
             renderWithStore(<ProductList />);
         });
 
-        await waitFor(() => expect(screen.getByText(/On Sale/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/Today's Deals!/i)).toBeInTheDocument());
         const saleProduct1Elements = screen.getAllByText(/Product 1/i);
         expect(saleProduct1Elements.length).toBeGreaterThan(0);
 
