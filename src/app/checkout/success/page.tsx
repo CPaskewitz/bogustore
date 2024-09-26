@@ -1,24 +1,45 @@
-'use client';
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store';
 import { clearCart } from '../../../store/cartSlice';
 import Link from 'next/link';
 
+type Product = {
+    id: number;
+    title: string;
+    image: string;
+    details: string;
+    price: number;
+    category: string;
+    onSale: number;
+    inventory: number;
+    quantity: number;
+    sizes: string[];
+    colors: string[];
+    size?: string;
+    color?: string;
+};
+
 export default function SuccessPage() {
     const cartItemsFromStore = useSelector((state: RootState) => state.cart.cartItems);
     const shippingInfoFromStore = useSelector((state: RootState) => state.cart.shippingInfo);
     const dispatch = useDispatch();
+    const [localCartItems, setLocalCartItems] = useState<Product[]>([]);
 
     useEffect(() => {
         if (cartItemsFromStore.length > 0 && shippingInfoFromStore) {
+            setLocalCartItems(cartItemsFromStore);
+        }
+    }, [cartItemsFromStore, shippingInfoFromStore]);
+
+    useEffect(() => {
+        if (localCartItems.length > 0) {
             dispatch(clearCart());
         }
-    }, [cartItemsFromStore, shippingInfoFromStore, dispatch]);
+    }, [localCartItems, dispatch]);
 
     const calculateTotalPrice = () => {
-        return cartItemsFromStore.reduce((total, product) => {
+        return localCartItems.reduce((total, product) => {
             const salePrice = product.onSale > 0 ? product.price * (1 - product.onSale / 100) : product.price;
             return total + salePrice * product.quantity;
         }, 0);
@@ -30,7 +51,7 @@ export default function SuccessPage() {
             <div className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
                 <h2 className="text-xl text-brown-800 font-semibold mb-4">Order Summary</h2>
                 <ul className="mb-4 text-brown-600">
-                    {cartItemsFromStore.map((item, index) => {
+                    {localCartItems.map((item, index) => {
                         const salePrice = item.onSale > 0 ? item.price * (1 - item.onSale / 100) : item.price;
                         return (
                             <li key={`${item.id}-${item.size}-${item.color}-${index}`} className="mb-4">
