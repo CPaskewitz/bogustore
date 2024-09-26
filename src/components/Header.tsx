@@ -12,17 +12,17 @@ export default function Header() {
         </Link>
         <ul className="flex items-center gap-8 text-brown-700">
           <li className="flex items-center">
-            <Link href="/" className="hover:soft-coral-800 transition">
+            <Link href="/" className="hover:soft-coral transition">
               Home
             </Link>
           </li>
           <li className="flex items-center">
-            <Link href="/sale" className="hover:soft-coral-800 transition">
+            <Link href="/sale" className="hover:soft-coral transition">
               Sale
             </Link>
           </li>
           <li className="flex items-center">
-            <Link href="/cart" className="hover:soft-coral-800 transition flex items-center">
+            <Link href="/cart" className="hover:soft-coral transition flex items-center">
               Cart
               <span className="ml-2">
                 <CartIcon />

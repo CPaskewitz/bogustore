@@ -42,7 +42,7 @@ export default function SaleProductsPage() {
 
     return (
         <main className="p-8 bg-beige-100 min-h-screen">
-            <h1 className="text-3xl font-bold mb-6">Products on Sale</h1>
+            <h1 className="text-3xl text-brown-800 font-bold mb-6">Products on Sale</h1>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {currentProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
